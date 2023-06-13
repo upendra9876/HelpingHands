@@ -59,8 +59,6 @@ public class IncidentTrackcontroller {
         return this.incidenttrackservice.findtotalincidentapprovebyadmin(adminId);
     }
 
-public void jh(){
 
-}
 
 }
