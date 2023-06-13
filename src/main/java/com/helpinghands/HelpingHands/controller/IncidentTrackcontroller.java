@@ -59,8 +59,8 @@ public class IncidentTrackcontroller {
         return this.incidenttrackservice.findtotalincidentapprovebyadmin(adminId);
     }
     @GetMapping("/getalluser")
-    public void rhjf(){
-
+    public String rhjf(){
+return "hiii uyjh";
     }
 
 
