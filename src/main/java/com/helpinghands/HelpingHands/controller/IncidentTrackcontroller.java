@@ -60,7 +60,7 @@ public class IncidentTrackcontroller {
     }
     @GetMapping("/getalluser")
     public String rhjf(){
-return "hiii";
+return "hiii uyjh";
     }
 
 
