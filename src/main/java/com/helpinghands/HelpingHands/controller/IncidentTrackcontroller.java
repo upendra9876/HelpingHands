@@ -58,6 +58,10 @@ public class IncidentTrackcontroller {
     public List<Centralrepositoryofincident> findtotalincidentapprovebyadmin(@RequestHeader String adminId) throws NoSuchElementException,EmptyListException{
         return this.incidenttrackservice.findtotalincidentapprovebyadmin(adminId);
     }
+    @GetMapping("/getalluser")
+    public void rhjf(){
+
+    }
 
 
 }
