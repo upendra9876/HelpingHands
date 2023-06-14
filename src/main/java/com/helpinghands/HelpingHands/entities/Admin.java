@@ -14,13 +14,9 @@ import java.util.List;
 public class Admin {
     @Id
     public String id;
-    public String name;
-    public String postalcode;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "adminId")
-    private List<Centralrepositoryofincident> centralrepositoryofincidents;
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "adminId")
-    private List<Temporarydatabaseofincident> temporarydatabaseofincidents;
+    public String name;
+
+
+
 }
