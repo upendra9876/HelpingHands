@@ -17,8 +17,7 @@ public class Location {
 
     private String district;
 
-    private long manmadedisaster;
-    private long naturaldisaster;
+
     private long totaldisaster;
 
     @OneToMany(cascade = CascadeType.ALL)

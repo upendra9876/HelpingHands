@@ -1,9 +1,6 @@
 package com.helpinghands.HelpingHands.services;
 
-import com.helpinghands.HelpingHands.entities.Admin;
-import com.helpinghands.HelpingHands.entities.Centralrepositoryofincident;
-import com.helpinghands.HelpingHands.entities.Location;
-import com.helpinghands.HelpingHands.entities.Temporarydatabaseofincident;
+import com.helpinghands.HelpingHands.entities.*;
 import com.helpinghands.HelpingHands.exception.EmptyListException;
 
 import java.util.List;
@@ -30,18 +27,17 @@ public interface Incidenttrackservice {
 
     public List<Centralrepositoryofincident> findincidentsbetweenduration();
 
-    public String mostpronicareabynaturaldisaster();
-    public String mostpronicareabymanmadedisaster();
-
-    public String totalcasualitybydisaster(String id);
-
-    public String overallcasualitiesbydisasterinarea(String pincode);
-
-    public List<Centralrepositoryofincident> findallincidentraisebyuser(String id); //id is userid
 
 
-    public String getuserbyincident(String id); //incident id and replcae return type by user
-    public String getadminbyincident(String id); //incident id and replace return type by admin
+    public long totalcasualitybyincident(String id);
+
+    public long overallcasualitiesbyincidentsinarea(String pincode);
+
+    public List<Object> findallincidentraisebyuser(String id) throws EmptyListException; //id is userid
+
+
+    public Users getuserbyincident(String id); //incident id and replcae return type by user
+    public Admin getadminbyincident(String id); //incident id and replace return type by admin
 
 
 public String getpostalbyuserid(String id);

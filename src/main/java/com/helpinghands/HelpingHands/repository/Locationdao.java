@@ -12,4 +12,6 @@ import java.util.List;
 public interface Locationdao extends JpaRepository<Location,String> {
        @Query("Select u from Location u where u.postalcode =:postalcode")
         public Location getallincidentsofarea(@Param("postalcode") String postalcode);
+
+
 }
