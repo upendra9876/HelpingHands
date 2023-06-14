@@ -8,43 +8,44 @@ import java.util.Locale;
 import java.util.NoSuchElementException;
 
 public interface Incidenttrackservice {
-    public List<Temporarydatabaseofincident> getallactiveincident() throws EmptyListException;
+    public List<Temporarydatabaseofincident> getAllActiveIncident() throws EmptyListException;
 
-    public List<Centralrepositoryofincident> getallincidenthappens() throws EmptyListException;
+    public List<Centralrepositoryofincident> getAllIncidentHappens() throws EmptyListException;
 
     public Location reportTheIncident(Temporarydatabaseofincident incident, String userId);//also send userid
-    public void Incidentverificationbyadmin(String incidentId);
+    public void incidentVerificationByAdmin(String incidentId);
 
-    public Admin getadminofarea(String postalcode);
+    public Admin getAdminOfArea(String postalcode);
 
-    public Temporarydatabaseofincident addorganisation(String id);//List of organisation as second arguement
+    public Temporarydatabaseofincident addOrganisation(String id);//List of organisation as second arguement
 
-    public Temporarydatabaseofincident incidentend(String id);
+    public Centralrepositoryofincident incidentEnd(String id);
 
-    public List<Centralrepositoryofincident> findallincidentinarea(String postalcode) throws EmptyListException;
+    public List<Centralrepositoryofincident> findAllIncidentInArea(String postalcode) throws EmptyListException;
 
-    public List<Object> findtotalincidentapprovebyadmin(String adminId) throws EmptyListException, NoSuchElementException;
+    public List<Object> findTotalIncidentApproveByAdmin(String adminId) throws EmptyListException, NoSuchElementException;
 
-    public List<Centralrepositoryofincident> findincidentsbetweenduration();
-
-
-
-    public long totalcasualitybyincident(String id);
-
-    public long overallcasualitiesbyincidentsinarea(String pincode);
-
-    public List<Object> findallincidentraisebyuser(String id) throws EmptyListException; //id is userid
+    public List<Centralrepositoryofincident> findIncidentsBetweenDuration();
 
 
-    public Users getuserbyincident(String id); //incident id and replcae return type by user
-    public Admin getadminbyincident(String id); //incident id and replace return type by admin
+
+    public long totalCasualityByIncident(String id);
+
+    public long overallCasualitiesByIncidentsInArea(String pincode);
+
+    public List<Object> findAllIncidentRaiseByUser(String id) throws EmptyListException; //id is userid
 
 
-public String getpostalbyuserid(String id);
+    public Users getUserByIncident(String id); //incident id and replcae return type by user
+    public Admin getAdminByIncident(String id); //incident id and replace return type by admin
 
-public String getpostalbyincidentid(String id);
 
-public String getpostalbyadminid(String adminid);
+public String getPostalByUserId(String id);
+
+public String getPostalByIncidentId(String id);
+
+public String getPostalByAdminId(String adminid);
+public Users getUserByIncidentInLocal(String id);
 
 
 
