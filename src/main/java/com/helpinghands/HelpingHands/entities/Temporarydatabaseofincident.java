@@ -18,21 +18,22 @@ import java.util.Date;
 @Entity
 public class Temporarydatabaseofincident {
     @Id
-
     public String id;
-    //@NotBlank(message = "Name must not be empty")
-    public String name;
-    //@NotBlank(message = "postal must not be empty")
-    //@NotNull(message = "refsd")
 
-    //@NotBlank(message = "must not be empty")
+    @NotBlank(message = "name must not be blank")
+    public String name;
+
+
+    @NotBlank(message = "District must not be blank")
     private String District;
 
+    @NotBlank(message = "State must not be blank")
     private String State;
-    //@NotBlank(message = "must not be empty")
+
+    @NotBlank(message = "Description must not be blank")
     private String Description;
     private long Casualty;
-   //@NotBlank(message = "wrd")
+
     private boolean Status;
 
     @Temporal(TemporalType.DATE)
@@ -42,7 +43,9 @@ public class Temporarydatabaseofincident {
     @DateTimeFormat(style = "HH:mm")
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="HH:mm",locale = "")
     private Date incidenttime;
+
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd/mm/yyyy")
     private Date IncidentDate;
 }
 

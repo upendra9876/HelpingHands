@@ -26,6 +26,12 @@ public class Applicationexceptioncontroller {
         });
         return errormap;
     }
+    @ExceptionHandler(IllegalStateException.class)
+    public Map<String,String> illegealstateexception(IllegalStateException exc){
+        Map<String,String> error = new HashMap<>();
+        error.put("error_message", exc.getMessage());
+        return error;
+    }
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(EmptyListException.class)
     public String noactiveincidentexception(EmptyListException exc){
@@ -35,7 +41,7 @@ public class Applicationexceptioncontroller {
     @ExceptionHandler(NoSuchElementException.class)
     public Map<String,String> nosuchelementexception(NoSuchElementException exc){
         Map<String ,String> errormap= new HashMap<>();
-        errormap.put("Error Message",exc.getMessage());
+        errormap.put("Error Message",exc.getLocalizedMessage());
         return errormap;
     }
 

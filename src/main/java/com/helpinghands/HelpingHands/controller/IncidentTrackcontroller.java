@@ -5,9 +5,11 @@ import com.helpinghands.HelpingHands.exception.EmptyListException;
 import com.helpinghands.HelpingHands.repository.AdminDao;
 import com.helpinghands.HelpingHands.repository.Centralrepositoryofincidentdao;
 import com.helpinghands.HelpingHands.services.Incidenttrackservice;
+import jakarta.validation.Valid;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,7 +39,7 @@ public class IncidentTrackcontroller {
         return this.incidenttrackservice.getallincidenthappens();
     }
     @PostMapping("/addlocal")
-    public Location addincident(@RequestBody Temporarydatabaseofincident incident, @RequestHeader String userId){
+    public Location addincident(@RequestBody @Valid Temporarydatabaseofincident incident, @RequestHeader String userId) throws MethodArgumentNotValidException,IllegalStateException {
        return  this.incidenttrackservice.reportTheIncident(incident,userId);
     }
 

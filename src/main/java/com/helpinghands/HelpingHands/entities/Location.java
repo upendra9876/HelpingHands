@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.NotBlank;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
 public class Location {
     @Id
     private String postalcode;
-
+    @NotBlank(message = "District must not be blank")
     private String district;
 
 
