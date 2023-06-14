@@ -35,5 +35,9 @@ public class Centralrepositoryofincident {
 
     @Temporal(TemporalType.DATE)
     private Date incidentDate;
+    @Temporal(TemporalType.TIME)
+    @DateTimeFormat(style = "HH:mm")
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="HH:mm",locale = "")
+    private Date incidenttime;
 }
 

@@ -9,6 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AdminDao extends JpaRepository<Admin,String> {
 
-    @Query("Select u from Admin u where u.postalcode =:postalcode")
-    public Admin getadminofpostalcode(@Param("postalcode") String postalcode);
+
 }

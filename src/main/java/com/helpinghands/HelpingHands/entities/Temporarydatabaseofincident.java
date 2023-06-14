@@ -18,15 +18,17 @@ import java.util.Date;
 @Entity
 public class Temporarydatabaseofincident {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+
     public String id;
     //@NotBlank(message = "Name must not be empty")
     public String name;
     //@NotBlank(message = "postal must not be empty")
     //@NotNull(message = "refsd")
-    public String postalcode;
+
     //@NotBlank(message = "must not be empty")
     private String District;
+
+    private String State;
     //@NotBlank(message = "must not be empty")
     private String Description;
     private long Casualty;

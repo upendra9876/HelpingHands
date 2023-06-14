@@ -34,7 +34,7 @@ public class Location {
     private List<Users> users;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "postal")
+    @JoinColumn(name = "admin")
     private Admin admin;
 
 
