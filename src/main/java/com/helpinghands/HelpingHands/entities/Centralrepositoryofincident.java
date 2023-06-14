@@ -19,7 +19,7 @@ public class Centralrepositoryofincident {
 
     private String name;
 
-    public String postalcode;
+
 
     private String district;
 

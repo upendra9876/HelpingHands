@@ -12,6 +12,6 @@ import java.util.List;
 @Repository
 public interface Centralrepositoryofincidentdao extends JpaRepository<Centralrepositoryofincident,String> {
 
-    @Query("Select u from Centralrepositoryofincident u where u.postalcode =:postalcode")
-    public List<Centralrepositoryofincident> getallincidentsofarea(@Param("postalcode") String postalcode);
+
+
 }

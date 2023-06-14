@@ -1,20 +1,15 @@
 package com.helpinghands.HelpingHands.services;
 
 
-import com.helpinghands.HelpingHands.entities.Admin;
-import com.helpinghands.HelpingHands.entities.Centralrepositoryofincident;
-import com.helpinghands.HelpingHands.entities.Temporarydatabaseofincident;
-import com.helpinghands.HelpingHands.entities.Users;
+import com.helpinghands.HelpingHands.entities.*;
 import com.helpinghands.HelpingHands.exception.EmptyListException;
-import com.helpinghands.HelpingHands.repository.AdminDao;
-import com.helpinghands.HelpingHands.repository.Centralrepositoryofincidentdao;
-import com.helpinghands.HelpingHands.repository.Temporarydatabaseofincidentdao;
-import com.helpinghands.HelpingHands.repository.UserDao;
+import com.helpinghands.HelpingHands.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.NoSuchElementException;
 
 @Service
@@ -30,6 +25,8 @@ public class incidenttrackserviceimpletation implements Incidenttrackservice{
     private UserDao userDao;
     @Autowired
     private AdminDao adminDao;
+    @Autowired
+    private Locationdao locationdao;
 
 
     @Override
@@ -85,9 +82,10 @@ public class incidenttrackserviceimpletation implements Incidenttrackservice{
 
     @Override
     public List<Centralrepositoryofincident> findallincidentinarea(String postalcode) throws EmptyListException {
-        List<Centralrepositoryofincident> incidents= centralrepositoryofincidentdao.getallincidentsofarea(postalcode);
-        if(incidents.size()>0) return incidents;
-        else throw new EmptyListException("no incident happen in area");
+       Location location1= locationdao.getallincidentsofarea(postalcode);
+       List<Centralrepositoryofincident> incidents=location1.getCentralrepositoryofincidentList();
+       if(incidents.size()>0) return incidents;
+       else throw new EmptyListException("no incident history in area");
     }
 
     @Override

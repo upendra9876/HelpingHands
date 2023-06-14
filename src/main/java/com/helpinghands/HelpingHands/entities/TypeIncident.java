@@ -5,31 +5,25 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
 import java.util.List;
+
+@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-public class Users {
+public class TypeIncident {
     @Id
-    private String userid;
+    private String typeid;
 
     private String name;
 
-
-
-
-
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "typeid")
     private List<Centralrepositoryofincident> centralrepositoryofincidents;
+
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "userId")
-    private List<Temporarydatabaseofincident> temporarydatabaseofincidents;
+    @JoinColumn(name = "typeid")
+    private List<Temporarydatabaseofincident> temporarydatabaseofincidents ;
 
 
 }
-
-
-
