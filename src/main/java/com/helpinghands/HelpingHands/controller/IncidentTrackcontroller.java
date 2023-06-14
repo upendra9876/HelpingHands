@@ -1,9 +1,6 @@
 package com.helpinghands.HelpingHands.controller;
 
-import com.helpinghands.HelpingHands.entities.Admin;
-import com.helpinghands.HelpingHands.entities.Centralrepositoryofincident;
-import com.helpinghands.HelpingHands.entities.Location;
-import com.helpinghands.HelpingHands.entities.Temporarydatabaseofincident;
+import com.helpinghands.HelpingHands.entities.*;
 import com.helpinghands.HelpingHands.exception.EmptyListException;
 import com.helpinghands.HelpingHands.repository.AdminDao;
 import com.helpinghands.HelpingHands.repository.Centralrepositoryofincidentdao;
@@ -29,6 +26,10 @@ public class IncidentTrackcontroller {
     @GetMapping("/getallactiveincident")
     public List<Temporarydatabaseofincident> getallactiveincident() throws EmptyListException {
         return this.incidenttrackservice.getallactiveincident();
+    }
+    @GetMapping("/totalcasualitybyincident/{incidentid}")
+    public long totalcasualitybyincident(@PathVariable String incidentid){
+        return this.incidenttrackservice.totalcasualitybyincident(incidentid);
     }
 
     @GetMapping("/getallincidentsofcountry")
@@ -76,8 +77,22 @@ public class IncidentTrackcontroller {
     public String getpostalbyadminid(@RequestHeader String adminid){
         return this.incidenttrackservice.getpostalbyadminid(adminid);
     }
+    @GetMapping("/overallcasualitiesinarea/{postal}")
+    public long overallcasualityinarea(@PathVariable String postal){
+        return this.incidenttrackservice.overallcasualitiesbyincidentsinarea(postal);
+    }
+    @GetMapping("/findallincidentraisebyuser")
+    public List<Object> findallincidentraisebyuser(@RequestHeader String userid) throws EmptyListException{
+        return  this.incidenttrackservice.findallincidentraisebyuser(userid);
+    }
+    @GetMapping("/getadminbyincident")
+    public Admin getadminbyincident(@RequestHeader String incidentid){
+        return this.incidenttrackservice.getadminbyincident(incidentid);
+    }
+    @GetMapping("/getuserbyincident")
+    public Users getuserbyincident(@RequestHeader String incidentid){
+        return this.incidenttrackservice.getuserbyincident(incidentid);
 
-
-
+    }
 
 }

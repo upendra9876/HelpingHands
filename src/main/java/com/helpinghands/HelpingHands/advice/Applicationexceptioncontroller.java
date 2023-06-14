@@ -1,6 +1,7 @@
 package com.helpinghands.HelpingHands.advice;
 
 import com.helpinghands.HelpingHands.exception.EmptyListException;
+import com.helpinghands.HelpingHands.exception.ValidIncidentidexception;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -36,6 +37,13 @@ public class Applicationexceptioncontroller {
         Map<String ,String> errormap= new HashMap<>();
         errormap.put("Error Message",exc.getMessage());
         return errormap;
+    }
+
+    @ExceptionHandler(ValidIncidentidexception.class)
+    public Map<String, String > validincidentidexception(ValidIncidentidexception exc){
+        Map<String,String> error = new HashMap<>();
+        error.put("error_message",exc.getMessage());
+        return error;
     }
 
 }
