@@ -3,6 +3,7 @@ package com.helpinghands.HelpingHands.services;
 import com.helpinghands.HelpingHands.entities.*;
 import com.helpinghands.HelpingHands.exception.EmptyListException;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Locale;
 import java.util.NoSuchElementException;
@@ -19,13 +20,15 @@ public interface Incidenttrackservice {
 
     public Temporarydatabaseofincident addOrganisation(String id);//List of organisation as second arguement
 
-    public Centralrepositoryofincident incidentEnd(String id);
+    public Centralrepositoryofincident incidentEnd(String id, LocalDate enddate);
 
     public List<Centralrepositoryofincident> findAllIncidentInArea(String postalcode) throws EmptyListException;
 
     public List<Object> findTotalIncidentApproveByAdmin(String adminId) throws EmptyListException, NoSuchElementException;
 
     public List<Centralrepositoryofincident> findIncidentsBetweenDuration();
+
+    public long updateCasuality(String incidentid,long Casuality);
 
 
 

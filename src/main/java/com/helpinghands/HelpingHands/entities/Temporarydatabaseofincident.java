@@ -39,7 +39,7 @@ public class Temporarydatabaseofincident {
     private boolean Status;
 
     @Column(name = "End_date", columnDefinition = "DATE")
-    private Date incidentEndDate;
+    private LocalDate incidentEndDate;
 
 
     @Column(name = "Date", columnDefinition = "DATE")

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.sound.sampled.FloatControl;
 import java.lang.invoke.WrongMethodTypeException;
+import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -239,11 +240,11 @@ public class incidenttrackserviceimpletation implements Incidenttrackservice{
     }
 
     @Override
-    public Centralrepositoryofincident incidentEnd(String incidentid) {
+    public Centralrepositoryofincident incidentEnd(String incidentid, LocalDate enddate) {
         Temporarydatabaseofincident incident= temporarydatabaseofincidentdao.findById(incidentid).get();
 
         if(incident!=null) {
-            //incident.setIncidentEndDate();
+            incident.setIncidentEndDate(enddate);
             Location location = locationdao.findById(getPostalByIncidentId(incidentid)).get();
             Users user = getUserByIncidentInLocal(incidentid);
             List<Centralrepositoryofincident> centralrepositoryofincidents= location.getCentralrepositoryofincidentList();
@@ -279,6 +280,17 @@ public class incidenttrackserviceimpletation implements Incidenttrackservice{
         return null;
     }
 
+    @Override
+    public long updateCasuality(String incidentid, long Casuality) {
+        Temporarydatabaseofincident incident= temporarydatabaseofincidentdao.findById(incidentid).get();
+        if(incident!=null) {
+            incident.setCasualty(incident.getCasualty()+Casuality);
+            temporarydatabaseofincidentdao.save(incident);
+            return incident.getCasualty();
+        }
+        else throw new NoSuchElementException("no incident found with id");
+    }
+
     public Users getUserByIncidentInLocal(String incidentid){
 
         Temporarydatabaseofincident incident = temporarydatabaseofincidentdao.findById(incidentid).get();
@@ -300,6 +312,7 @@ public class incidenttrackserviceimpletation implements Incidenttrackservice{
         return null;
 
     }
+
 
 
 }
