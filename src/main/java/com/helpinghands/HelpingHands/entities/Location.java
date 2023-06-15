@@ -15,6 +15,7 @@ import java.util.List;
 public class Location {
     @Id
     private String postalcode;
+
     @NotBlank(message = "District must not be blank")
     private String district;
 

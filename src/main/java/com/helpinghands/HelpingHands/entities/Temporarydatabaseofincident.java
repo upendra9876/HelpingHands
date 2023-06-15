@@ -45,8 +45,8 @@ public class Temporarydatabaseofincident {
     @Column(name = "Date", columnDefinition = "DATE")
     private LocalDate incidentDate;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss")
     @Column(name = "time", columnDefinition = "TIME")
-
     private LocalTime incidenttime;
 
 //    @Temporal(TemporalType.DATE)
