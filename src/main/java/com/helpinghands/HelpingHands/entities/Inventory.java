@@ -1,10 +1,14 @@
 package com.helpinghands.HelpingHands.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "inventory")
 public class Inventory {
     @Id
@@ -13,12 +17,12 @@ public class Inventory {
     private String inventoryId;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_vehicle_id")
-    private InventoryVehicle vehicleId;
+    @JoinColumn(name = "fk_vehicle")
+    private InventoryVehicle vehicle;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_blood_bank_id")
-    private InventoryBloodBank bloodBankId;
+    @JoinColumn(name = "fk_blood_bank")
+    private InventoryBloodBank bloodBank;
 
     @Column(name = "water_gallon")
     private long waterGallon;

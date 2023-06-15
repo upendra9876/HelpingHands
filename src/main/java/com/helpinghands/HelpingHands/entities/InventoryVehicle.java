@@ -1,11 +1,15 @@
 package com.helpinghands.HelpingHands.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "inventory_vehicle")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class InventoryVehicle {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
