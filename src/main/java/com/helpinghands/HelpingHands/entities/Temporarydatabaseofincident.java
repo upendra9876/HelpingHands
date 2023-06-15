@@ -10,6 +10,8 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 @Data
@@ -36,17 +38,28 @@ public class Temporarydatabaseofincident {
 
     private boolean Status;
 
-    @Temporal(TemporalType.DATE)
-    private Date incidenteffectdate;
+    @Column(name = "End_date", columnDefinition = "DATE")
+    private Date incidentEndDate;
 
-    @Temporal(TemporalType.TIME)
-    @DateTimeFormat(style = "HH:mm")
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="HH:mm",locale = "")
-    private Date incidenttime;
 
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "dd/mm/yyyy")
-    private Date IncidentDate;
+    @Column(name = "Date", columnDefinition = "DATE")
+    private LocalDate incidentDate;
+
+    @Column(name = "time", columnDefinition = "TIME")
+    private LocalTime incidenttime;
+
+//    @Temporal(TemporalType.DATE)
+//    private Date incidenteffectdate;
+//
+//    @Temporal(TemporalType.TIME)
+//    @DateTimeFormat(style = "HH:mm")
+//    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="HH:mm",locale = "")
+//    private Date incidenttime;
+//
+//    @Temporal(TemporalType.DATE)
+//    @DateTimeFormat(pattern = "dd/mm/yyyy")
+//    private Date IncidentDate;
+//
 }
 
 

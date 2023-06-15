@@ -239,8 +239,41 @@ public class incidenttrackserviceimpletation implements Incidenttrackservice{
     }
 
     @Override
-    public Centralrepositoryofincident incidentEnd(String id) {
-        return null;
+    public Centralrepositoryofincident incidentEnd(String incidentid) {
+        Temporarydatabaseofincident incident= temporarydatabaseofincidentdao.findById(incidentid).get();
+
+        if(incident!=null) {
+            //incident.setIncidentEndDate();
+            Location location = locationdao.findById(getPostalByIncidentId(incidentid)).get();
+            Users user = getUserByIncidentInLocal(incidentid);
+            List<Centralrepositoryofincident> centralrepositoryofincidents= location.getCentralrepositoryofincidentList();
+            List<Centralrepositoryofincident> centralrepositoryofincidentList= user.getCentralrepositoryofincidents();
+            List<Temporarydatabaseofincident> temporarydatabaseofincidents= location.getTemporarydatabaseofincidents();
+            temporarydatabaseofincidents.remove(incident);
+            List<Temporarydatabaseofincident> temporarydatabaseofincidents1= user.getTemporarydatabaseofincidents();
+            temporarydatabaseofincidents1.remove(incident);
+            temporarydatabaseofincidentdao.delete(incident);
+            Centralrepositoryofincident centralrepositoryofincident= new Centralrepositoryofincident();
+
+            centralrepositoryofincident.setId(incident.id);
+            centralrepositoryofincident.setName(incident.getName());
+            centralrepositoryofincident.setIncidentEndDate(incident.getIncidentEndDate());
+            centralrepositoryofincident.setDistrict(incident.getDistrict());
+            centralrepositoryofincident.setCasualty(incident.getCasualty());
+            centralrepositoryofincident.setDescription(incident.getDescription());
+            centralrepositoryofincident.setIncidentDate(incident.getIncidentDate());
+            centralrepositoryofincident.setIncidenttime(incident.getIncidenttime());
+            centralrepositoryofincident.setState(incident.getState());
+            centralrepositoryofincidentdao.save(centralrepositoryofincident);
+
+            centralrepositoryofincidentList.add(centralrepositoryofincident);
+            centralrepositoryofincidents.add(centralrepositoryofincident);
+            locationdao.save(location);
+
+            return centralrepositoryofincident;
+
+        }
+        else throw new NoSuchElementException("No INcident Found with id");
     }
     public List<Centralrepositoryofincident> findIncidentsBetweenDuration() {
         return null;

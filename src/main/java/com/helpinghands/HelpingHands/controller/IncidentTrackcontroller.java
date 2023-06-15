@@ -14,6 +14,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -63,39 +64,8 @@ public class IncidentTrackcontroller {
     }
     @DeleteMapping("/setincidentenddate")
     public Centralrepositoryofincident endincident(@RequestHeader String incidentid) throws NoSuchElementException{
-        Temporarydatabaseofincident incident= temporarydatabaseofincidentdao.findById(incidentid).get();
 
-        if(incident!=null) {
-            Location location = locationdao.findById(getPostalByIncidentId(incidentid)).get();
-            Users user = getUserByIncidentInLocal(incidentid);
-            List<Centralrepositoryofincident> centralrepositoryofincidents= location.getCentralrepositoryofincidentList();
-            List<Centralrepositoryofincident> centralrepositoryofincidentList= user.getCentralrepositoryofincidents();
-            List<Temporarydatabaseofincident> temporarydatabaseofincidents= location.getTemporarydatabaseofincidents();
-            temporarydatabaseofincidents.remove(incident);
-            List<Temporarydatabaseofincident> temporarydatabaseofincidents1= user.getTemporarydatabaseofincidents();
-            temporarydatabaseofincidents1.remove(incident);
-            temporarydatabaseofincidentdao.delete(incident);
-            Centralrepositoryofincident centralrepositoryofincident= new Centralrepositoryofincident();
-
-            centralrepositoryofincident.setId(incident.id);
-            centralrepositoryofincident.setName(incident.getName());
-            centralrepositoryofincident.setIncidentEndDate(incident.getIncidenteffectdate());
-            centralrepositoryofincident.setDistrict(incident.getDistrict());
-            centralrepositoryofincident.setCasualty(incident.getCasualty());
-            centralrepositoryofincident.setDescription(incident.getDescription());
-            centralrepositoryofincident.setIncidentDate(incident.getIncidentDate());
-            centralrepositoryofincident.setState(incident.getState());
-            centralrepositoryofincidentdao.save(centralrepositoryofincident);
-
-            centralrepositoryofincidentList.add(centralrepositoryofincident);
-            centralrepositoryofincidents.add(centralrepositoryofincident);
-            locationdao.save(location);
-
-            return centralrepositoryofincident;
-
-      }
-       else throw new NoSuchElementException("No INcident Found with id");
-        //return this.incidenttrackservice.incidentEnd(incidentid);
+        return this.incidenttrackservice.incidentEnd(incidentid);
 
     }
     @GetMapping("/getallincidentofarea")
@@ -138,9 +108,28 @@ public class IncidentTrackcontroller {
         return this.incidenttrackservice.getUserByIncident(incidentid);
 
     }
+    @GetMapping("/getalllocation")
+    public List<Location> getalllocation(){
+        return locationdao.findAll();
+    }
+
+    @GetMapping("/getallincidentbetweendate")
+    public List<Centralrepositoryofincident> getallincidentbetweendate(@RequestHeader LocalDate startdate, @RequestHeader LocalDate enddate){
+        return centralrepositoryofincidentdao.getallincidentbetweendate(startdate,enddate);
+    }
+
+    @GetMapping("/getallincidentafterdate")
+    public List<Centralrepositoryofincident> getallincidentafterdate(@RequestHeader LocalDate incidentDate){
+        return centralrepositoryofincidentdao.getallincidentafterdate(incidentDate);
+    }
+
+
+
 
     public Users getUserByIncidentInLocal(String id){
         return this.incidenttrackservice.getUserByIncidentInLocal(id);
     }
+
+
 
 }
