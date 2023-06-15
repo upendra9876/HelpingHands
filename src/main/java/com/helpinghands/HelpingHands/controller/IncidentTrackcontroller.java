@@ -1,5 +1,6 @@
 package com.helpinghands.HelpingHands.controller;
 
+import com.helpinghands.HelpingHands.Constants;
 import com.helpinghands.HelpingHands.entities.*;
 import com.helpinghands.HelpingHands.exception.EmptyListException;
 import com.helpinghands.HelpingHands.repository.AdminDao;
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
+@RequestMapping("/api/v1")
 @Log4j2
 public class IncidentTrackcontroller {
     @Autowired
@@ -35,92 +37,96 @@ public class IncidentTrackcontroller {
 
     @Autowired
     private Locationdao locationdao;
-    @GetMapping("/getallactiveincident")
-    public List<Temporarydatabaseofincident> getAllactiveincident() throws EmptyListException {
+    @GetMapping(Constants.GET_ALL_INCIDENT)
+    public List<Temporarydatabaseofincident> getAllActiveIncident() throws EmptyListException {
         return this.incidenttrackservice.getAllActiveIncident();
     }
-    @GetMapping("/totalcasualitybyincident/{incidentid}")
-    public long totalcasualitybyincident(@PathVariable String incidentid){
-        return this.incidenttrackservice.totalCasualityByIncident(incidentid);
+    @GetMapping(Constants.TOTAL_CASULAITY_BY_INCIDENT)
+    public long totalCasualityByIncident(@PathVariable String incidentId){
+        return this.incidenttrackservice.totalCasualityByIncident(incidentId);
     }
 
-    @GetMapping("/getallincidentsofcountry")
-    public List<Centralrepositoryofincident> getallincidentofcountry() throws EmptyListException {
+    @GetMapping(Constants.GET_ALL_INCIDENT_HAPPEN)
+    public List<Centralrepositoryofincident> getAllIncidentOfCountry() throws EmptyListException {
         return this.incidenttrackservice.getAllIncidentHappens();
     }
-    @PostMapping("/addlocal")
-    public Location addincident(@RequestBody @Valid Temporarydatabaseofincident incident, @RequestHeader String userId) throws MethodArgumentNotValidException,IllegalStateException {
+    @PostMapping(Constants.REPORT_INCIDENT)
+    public Location addIncident(@RequestBody @Valid Temporarydatabaseofincident incident, @RequestHeader String userId) throws MethodArgumentNotValidException,IllegalStateException {
        return  this.incidenttrackservice.reportTheIncident(incident,userId);
     }
 
-    @GetMapping("/verifyincident")
-    public String incidentverifybyadmin(@RequestHeader String incidentId) throws NoSuchElementException {
+    @GetMapping(Constants.VERIFY_INCIDENT_BY_AREA_ADMIN)
+    public String incidentVerifyByAdmin(@RequestHeader String incidentId) throws NoSuchElementException {
         this.incidenttrackservice.incidentVerificationByAdmin(incidentId);
         return "incident verified by admin";
     }
-    @GetMapping("/getadmin")
-    public Admin getadmin(@RequestHeader String postalcode) throws NoSuchElementException{
+    @GetMapping(Constants.GET_ADMIN_OF_AREA)
+    public Admin getAdmin(@RequestHeader String postalcode) throws NoSuchElementException{
         return this.incidenttrackservice.getAdminOfArea(postalcode);
     }
-    @DeleteMapping("/setincidentenddate")
-    public Centralrepositoryofincident endincident(@RequestHeader String incidentid) throws NoSuchElementException{
+    @DeleteMapping(Constants.SET_INCIDENT_EFFECT_END_DATE)
+    public Centralrepositoryofincident endIncident(@RequestHeader String incidentId,@RequestHeader LocalDate endDate) throws NoSuchElementException{
 
-        return this.incidenttrackservice.incidentEnd(incidentid);
+        return this.incidenttrackservice.incidentEnd(incidentId,endDate);
 
     }
-    @GetMapping("/getallincidentofarea")
-    public List<Centralrepositoryofincident> getallincincidentofarea(@RequestHeader String postalcode) throws EmptyListException{
-        return this.incidenttrackservice.findAllIncidentInArea(postalcode);
+    @GetMapping(Constants.GET_ALL_INCIDENT_OF_AREA)
+    public List<Centralrepositoryofincident> getAllIncincidentOfArea(@RequestHeader String postalCode) throws EmptyListException{
+        return this.incidenttrackservice.findAllIncidentInArea(postalCode);
     }
-    @GetMapping("/findtotalincidentapprovebyadmin")
-    public List<Object> findtotalincidentapprovebyadmin(@RequestHeader String adminId) throws NoSuchElementException,EmptyListException{
+    @GetMapping(Constants.FIND_TOTAL_INCIDENT_APPROVE_BY_ADMIN)
+    public List<Object> FindTotalIncidentApproveByAdmin(@RequestHeader String adminId) throws NoSuchElementException,EmptyListException{
         return this.incidenttrackservice.findTotalIncidentApproveByAdmin(adminId);
     }
 
-    @GetMapping("/getpostalbyuser/{userId}")
-    public String getpostalbyuser(@PathVariable String userId){
+    @GetMapping(Constants.GET_POSTAL_WHICH_USER_BELONGS)
+    public String getPostalByUser(@PathVariable String userId){
         return incidenttrackservice.getPostalByUserId(userId);
     }
 
-    @GetMapping("/getPostalByIncidentId/{incidentid}")
-    public String getPostalByIncidentId(@PathVariable String incidentid){
-        return this.incidenttrackservice.getPostalByIncidentId(incidentid);
+    @GetMapping(Constants.GET_POSTAL_IN_WHICH_INCIDENT_HAPPENS)
+    public String getPostalByIncidentId(@PathVariable String incidentId){
+        return this.incidenttrackservice.getPostalByIncidentId(incidentId);
     }
 
-    @GetMapping("/getpostalbyadminid")
-    public String getpostalbyadminid(@RequestHeader String adminid){
-        return this.incidenttrackservice.getPostalByAdminId(adminid);
+    @GetMapping(Constants.GET_POSTAL_BY_ADMIN)
+    public String getPostalByAdminId(@RequestHeader String adminId){
+        return this.incidenttrackservice.getPostalByAdminId(adminId);
     }
-    @GetMapping("/overallcasualitiesinarea/{postal}")
-    public long overallcasualityinarea(@PathVariable String postal){
+    @GetMapping(Constants.OVERALL_CASULAITIES_IN_AREA)
+    public long overallCasualityInArea(@PathVariable String postal){
         return this.incidenttrackservice.overallCasualitiesByIncidentsInArea(postal);
     }
-    @GetMapping("/findallincidentraisebyuser")
-    public List<Object> findallincidentraisebyuser(@RequestHeader String userid) throws EmptyListException{
-        return  this.incidenttrackservice.findAllIncidentRaiseByUser(userid);
+    @GetMapping(Constants.FIND_ALL_INCIDENT_RAISE_BY_USER)
+    public List<Object> findAllIncidentRaiseByUser(@RequestHeader String userId) throws EmptyListException{
+        return  this.incidenttrackservice.findAllIncidentRaiseByUser(userId);
     }
-    @GetMapping("/getadminbyincident")
-    public Admin getadminbyincident(@RequestHeader String incidentid){
-        return this.incidenttrackservice.getAdminByIncident(incidentid);
+    @GetMapping(Constants.GET_ADMIN_WHO_APPROVE_INCIDENT)
+    public Admin getAdminByIncident(@RequestHeader String incidentId){
+        return this.incidenttrackservice.getAdminByIncident(incidentId);
     }
-    @GetMapping("/getuserbyincident")
-    public Users getUserByIncident(@RequestHeader String incidentid){
-        return this.incidenttrackservice.getUserByIncident(incidentid);
+    @GetMapping(Constants.GET_USER_WHO_REPORT_INCIDENT)
+    public Users getUserByIncident(@RequestHeader String incidentId){
+        return this.incidenttrackservice.getUserByIncident(incidentId);
 
     }
-    @GetMapping("/getalllocation")
-    public List<Location> getalllocation(){
+    @GetMapping(Constants.GET_ALL_LOCATION)
+    public List<Location> getAllLocation(){
         return locationdao.findAll();
     }
 
-    @GetMapping("/getallincidentbetweendate")
-    public List<Centralrepositoryofincident> getallincidentbetweendate(@RequestHeader LocalDate startdate, @RequestHeader LocalDate enddate){
-        return centralrepositoryofincidentdao.getallincidentbetweendate(startdate,enddate);
+    @GetMapping(Constants.GET_ALL_INCIDENT_BETWEEN_DATE)
+    public List<Centralrepositoryofincident> getAllIncidentBetweenDate(@RequestHeader LocalDate startDate, @RequestHeader LocalDate endDate){
+        return centralrepositoryofincidentdao.getallincidentbetweendate(startDate,endDate);
     }
 
-    @GetMapping("/getallincidentafterdate")
-    public List<Centralrepositoryofincident> getallincidentafterdate(@RequestHeader LocalDate incidentDate){
+    @GetMapping(Constants.GET_ALL_INCIDENT_AFTER_DATE)
+    public List<Centralrepositoryofincident> getAllIncidentAfterDate(@RequestHeader LocalDate incidentDate){
         return centralrepositoryofincidentdao.getallincidentafterdate(incidentDate);
+    }
+    @PutMapping(Constants.UPDATE_CASULAITY_IN_INCIDENT)
+    public long updateCasuality(@PathVariable long casuality, @RequestHeader String incidentId){
+        return this.incidenttrackservice.updateCasuality(incidentId,casuality);
     }
 
 
