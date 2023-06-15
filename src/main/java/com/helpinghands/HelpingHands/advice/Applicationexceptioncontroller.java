@@ -29,26 +29,36 @@ public class Applicationexceptioncontroller {
     @ExceptionHandler(IllegalStateException.class)
     public Map<String,String> illegealstateexception(IllegalStateException exc){
         Map<String,String> error = new HashMap<>();
+
         error.put("error_message", exc.getMessage());
+        error.put("es","1");
         return error;
     }
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(EmptyListException.class)
-    public String noactiveincidentexception(EmptyListException exc){
-        return exc.getMessage();
+    public Map<String ,String> noactiveincidentexception(EmptyListException exc){
+        Map<String ,String> errormap= new HashMap<>();
+
+        errormap.put("errorMessage", exc.getMessage());
+        errormap.put("es","1");
+        return errormap;
     }
 
     @ExceptionHandler(NoSuchElementException.class)
     public Map<String,String> nosuchelementexception(NoSuchElementException exc){
         Map<String ,String> errormap= new HashMap<>();
+        errormap.put("es","1");
         errormap.put("Error Message",exc.getLocalizedMessage());
+        errormap.put("es","1");
         return errormap;
     }
 
     @ExceptionHandler(ValidIncidentidexception.class)
     public Map<String, String > validincidentidexception(ValidIncidentidexception exc){
         Map<String,String> error = new HashMap<>();
+
         error.put("error_message",exc.getMessage());
+        error.put("es","1");
         return error;
     }
 

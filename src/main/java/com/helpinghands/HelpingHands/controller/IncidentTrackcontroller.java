@@ -128,6 +128,16 @@ public class IncidentTrackcontroller {
     public long updateCasuality(@PathVariable long casuality, @RequestHeader String incidentId){
         return this.incidenttrackservice.updateCasuality(incidentId,casuality);
     }
+    @DeleteMapping(Constants.INCIDENT_IS_FALSE)
+    public String incidentIsFalse(@PathVariable String incidentId) throws NoSuchElementException{
+        Temporarydatabaseofincident incident = temporarydatabaseofincidentdao.findById(incidentId).get();
+
+        if(incident!=null){
+            temporarydatabaseofincidentdao.delete(incident);
+            return "incident is false";
+        }
+        else throw new  NoSuchElementException("please enter valid incident id");
+    }
 
 
 

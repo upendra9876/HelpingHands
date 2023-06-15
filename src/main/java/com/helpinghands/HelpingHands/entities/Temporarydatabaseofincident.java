@@ -46,6 +46,7 @@ public class Temporarydatabaseofincident {
     private LocalDate incidentDate;
 
     @Column(name = "time", columnDefinition = "TIME")
+
     private LocalTime incidenttime;
 
 //    @Temporal(TemporalType.DATE)
