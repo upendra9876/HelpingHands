@@ -226,7 +226,7 @@ public class incidenttrackserviceimpletation implements Incidenttrackservice{
         List<Location> locations= locationdao.findAll();
         for(Location i : locations){
             Admin admin= i.getAdmin();
-            String id= admin.getId();
+            String id= admin.getAdminid();
             if(id.equals(adminid)){
                 return i.getPostalcode();
             }

@@ -3,7 +3,7 @@ package com.helpinghands.HelpingHands;
 public class Constants {
 
     public static final String GET_ALL_INCIDENT="/getAllActiveIncident";
-    public static final String TOTAL_CASULAITY_BY_INCIDENT=       "/totalCasualityByIncident/{incidentId}";
+    public static final String TOTAL_CASULAITY_BY_INCIDENT= "/totalCasualityByIncident/{incidentId}";
     public static final String GET_ALL_INCIDENT_HAPPEN ="/getAllIncidentsOfCountry";
     public static final String REPORT_INCIDENT="/addLocal";
     public static final String VERIFY_INCIDENT_BY_AREA_ADMIN="/verifyIncident";
@@ -25,6 +25,10 @@ public class Constants {
     public static final String UPDATE_CASULAITY_IN_INCIDENT="/updateCasuality/{casuality}";
 
     public static final String INCIDENT_IS_FALSE="/incidentIsFalse/{incidentId}";
+
+    public static final String MOST_PRONIC_AREA="/mostPronicArea";
+
+    public static final String LEAST_PRONIC_AREA="/leastPronicArea";
 
 
 }

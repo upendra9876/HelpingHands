@@ -11,7 +11,13 @@ import java.util.List;
 @Repository
 public interface Locationdao extends JpaRepository<Location,String> {
        @Query("Select u from Location u where u.postalcode =:postalcode")
-        public Location getallincidentsofarea(@Param("postalcode") String postalcode);
+        public Location getlocationbypostalcode(@Param("postalcode") String postalcode);
+
+    @Query("SELECT a FROM Location a WHERE a.totaldisaster =( SELECT MAX(a.totaldisaster) FROM Location a)")
+    public List<Location> mostPronicToIncident();
+
+    @Query("SELECT a FROM Location a WHERE a.totaldisaster =( SELECT MIN(a.totaldisaster) FROM Location a)")
+    public List<Location> leastPronicAreaToIncident();
 
 
 }

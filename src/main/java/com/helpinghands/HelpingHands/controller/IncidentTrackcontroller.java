@@ -138,7 +138,15 @@ public class IncidentTrackcontroller {
         }
         else throw new  NoSuchElementException("please enter valid incident id");
     }
+    @GetMapping(Constants.MOST_PRONIC_AREA)
+    public List<Location> mostPronicArea(){
+        return this.locationdao.mostPronicToIncident();
+    }
 
+    @GetMapping(Constants.LEAST_PRONIC_AREA)
+    public List<Location> leastPronicArea(){
+        return this.locationdao.leastPronicAreaToIncident();
+    }
 
 
 

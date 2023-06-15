@@ -21,4 +21,6 @@ public interface Centralrepositoryofincidentdao extends JpaRepository<Centralrep
 
 
 
+
+
 }
