@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 @Data
@@ -33,17 +35,14 @@ public class Centralrepositoryofincident {
     private long Casualty;
 
 
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "dd/mm/yyyy")
+    @Column(name = "End_date", columnDefinition = "DATE")
     private Date incidentEndDate;
 
 
-    @Temporal(TemporalType.DATE)
-    private Date incidentDate;
+    @Column(name = "Date", columnDefinition = "DATE")
+    private LocalDate incidentDate;
 
-    @Temporal(TemporalType.TIME)
-    @DateTimeFormat(style = "HH:mm")
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="HH:mm",locale = "")
-    private Date incidenttime;
+    @Column(name = "time", columnDefinition = "TIME")
+    private LocalTime incidenttime;
 }
 
