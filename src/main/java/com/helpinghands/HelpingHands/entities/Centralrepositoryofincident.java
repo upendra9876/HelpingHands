@@ -42,7 +42,7 @@ public class Centralrepositoryofincident {
     @Column(name = "Date", columnDefinition = "DATE")
     private LocalDate incidentDate;
 
-    @Column(name = "time", columnDefinition = "TIME")
-    private LocalTime incidenttime;
+//    @Column(name = "time", columnDefinition = "TIME")
+//    private LocalTime incidenttime;
 }
 
