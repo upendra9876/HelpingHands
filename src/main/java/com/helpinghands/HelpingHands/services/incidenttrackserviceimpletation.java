@@ -263,7 +263,7 @@ public class incidenttrackserviceimpletation implements Incidenttrackservice{
             centralrepositoryofincident.setCasualty(incident.getCasualty());
             centralrepositoryofincident.setDescription(incident.getDescription());
             centralrepositoryofincident.setIncidentDate(incident.getIncidentDate());
-            centralrepositoryofincident.setIncidenttime(incident.getIncidenttime());
+
             centralrepositoryofincident.setState(incident.getState());
             centralrepositoryofincidentdao.save(centralrepositoryofincident);
 
