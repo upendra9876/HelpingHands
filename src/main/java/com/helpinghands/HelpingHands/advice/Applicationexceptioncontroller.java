@@ -34,7 +34,7 @@ public class Applicationexceptioncontroller {
         error.put("es","1");
         return error;
     }
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(EmptyListException.class)
     public Map<String ,String> noactiveincidentexception(EmptyListException exc){
         Map<String ,String> errormap= new HashMap<>();
@@ -43,13 +43,13 @@ public class Applicationexceptioncontroller {
         errormap.put("es","1");
         return errormap;
     }
-
+@ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NoSuchElementException.class)
     public Map<String,String> nosuchelementexception(NoSuchElementException exc){
         Map<String ,String> errormap= new HashMap<>();
         errormap.put("es","1");
         errormap.put("Error Message",exc.getLocalizedMessage());
-        errormap.put("es","1");
+
         return errormap;
     }
 

@@ -31,7 +31,7 @@ public class incidenttrackserviceimpletation implements Incidenttrackservice{
 
 
     @Override
-    public Location reportTheIncident(Temporarydatabaseofincident incident,String userId) {
+    public Location reportTheIncident(Temporarydatabaseofincident incident,String userId){
         Users user= userDao.findById(userId).get();
         String error="NO USer exist with id"+userId;
         if(user!=null){
@@ -39,16 +39,17 @@ public class incidenttrackserviceimpletation implements Incidenttrackservice{
             Location location= locationdao.findById(postalcode).get();
             List<Temporarydatabaseofincident> incidents= location.getTemporarydatabaseofincidents();
             List<Temporarydatabaseofincident> userincident= user.getTemporarydatabaseofincidents();
-            temporarydatabaseofincidentdao.save(incident);
+
             userincident.add(incident);
             incidents.add(incident);
             locationdao.save(location);
+            userDao.save(user);
+            temporarydatabaseofincidentdao.save(incident);
             return location;
         }
         else throw new NoSuchElementException(error);
 
     }
-
 
     @Override
     public void incidentVerificationByAdmin(String incidentId) {
@@ -269,6 +270,7 @@ public class incidenttrackserviceimpletation implements Incidenttrackservice{
 
             centralrepositoryofincidentList.add(centralrepositoryofincident);
             centralrepositoryofincidents.add(centralrepositoryofincident);
+            location.setTotaldisaster(location.getTotaldisaster()+1);
             locationdao.save(location);
 
             return centralrepositoryofincident;
@@ -291,7 +293,7 @@ public class incidenttrackserviceimpletation implements Incidenttrackservice{
         else throw new NoSuchElementException("no incident found with id");
     }
 
-    public Users getUserByIncidentInLocal(String incidentid){
+    public Users getUserByIncidentInLocal(String incidentid)throws NoSuchElementException{
 
         Temporarydatabaseofincident incident = temporarydatabaseofincidentdao.findById(incidentid).get();
         if(incident!=null){
@@ -312,8 +314,5 @@ public class incidenttrackserviceimpletation implements Incidenttrackservice{
         return null;
 
     }
-
-
-
 }
 

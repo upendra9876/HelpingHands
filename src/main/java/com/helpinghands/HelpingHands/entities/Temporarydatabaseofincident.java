@@ -61,6 +61,9 @@ public class Temporarydatabaseofincident {
 //    @DateTimeFormat(pattern = "dd/mm/yyyy")
 //    private Date IncidentDate;
 //
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "inventory")
+    private Inventory inventory;
 }
 
 

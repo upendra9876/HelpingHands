@@ -29,6 +29,8 @@ public class Constants {
     public static final String MOST_PRONIC_AREA="/mostPronicArea";
 
     public static final String LEAST_PRONIC_AREA="/leastPronicArea";
+    public static final String INCIDENT_WITH_MAXIMUM_CASUALTY="/getincidentwithmaximimcasualty";
+    public static final String GET_LOCATION_BY_POSTAL_CODE="/getLOcationByPostalCode";
 
 
 }

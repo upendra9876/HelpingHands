@@ -1,6 +1,6 @@
 Helpinghands
 
-This Springboot is based on quick response system whenever a incident hit a country.
+This Springboot project is based on quick response system whenever a incident hit a country.
 
 
 
