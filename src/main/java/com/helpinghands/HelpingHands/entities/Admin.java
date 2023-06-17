@@ -15,7 +15,6 @@ import java.util.List;
 @Entity
 public class Admin {
     @Id
-    public String id;
     @Column(name="adminId")
     @GeneratedValue(strategy = GenerationType.UUID)
     public String adminid;
@@ -48,20 +47,12 @@ public class Admin {
     @Column(name="Country")
     private String country;
 
-    @NotBlank
-    @Column(name="Pincode")
-    private String pincode;
+   
 
     @NotNull
     @Column(name="Moblie_no.")
     private Long moblieno;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "adminId")
-    private List<Centralrepositoryofincident> centralrepositoryofincidents;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "adminId")
-    private List<Temporarydatabaseofincident> temporarydatabaseofincidents;
 
 }

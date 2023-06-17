@@ -23,6 +23,7 @@ import java.util.NoSuchElementException;
 @RestController
 @RequestMapping("/api/v1")
 @Log4j2
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class IncidentTrackcontroller {
     @Autowired
     private Incidenttrackservice incidenttrackservice;
@@ -148,7 +149,18 @@ public class IncidentTrackcontroller {
         return this.locationdao.leastPronicAreaToIncident();
     }
 
+    @GetMapping(Constants.GET_LOCATION_BY_POSTAL_CODE)
+    public Location getLocationByPostalCode(@RequestHeader String postalCode) throws NoSuchElementException{
 
+        Location location=locationdao.getlocationbypostalcode(postalCode);
+        if(location!=null) return location;
+        else throw new NoSuchElementException("please enter valid postal code");
+    }
+
+    @GetMapping(Constants.INCIDENT_WITH_MAXIMUM_CASUALTY)
+    public List<Centralrepositoryofincident> getincidentwithmaxcasualty(){
+        return  this.centralrepositoryofincidentdao.getincidentwithmaximumcasualty();
+    }
 
     public Users getUserByIncidentInLocal(String id){
         return this.incidenttrackservice.getUserByIncidentInLocal(id);
