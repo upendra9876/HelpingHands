@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface Temporarydatabaseofincidentdao extends JpaRepository<Temporarydatabaseofincident,String> {
 
 
+
 }

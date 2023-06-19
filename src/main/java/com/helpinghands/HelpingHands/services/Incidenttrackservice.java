@@ -22,7 +22,7 @@ public interface Incidenttrackservice {
 
     public Centralrepositoryofincident incidentEnd(String id, LocalDate enddate);
 
-    public List<Centralrepositoryofincident> findAllIncidentInArea(String postalcode) throws EmptyListException;
+    public List<Centralrepositoryofincident> findAllIncidentInArea(String postalcode) throws NoSuchElementException;
 
     public List<Object> findTotalIncidentApproveByAdmin(String adminId) throws EmptyListException, NoSuchElementException;
 

@@ -1,7 +1,7 @@
 package com.helpinghands.HelpingHands.controller;
 
-import com.helpinghands.HelpingHands.entities.Inventory;
-import com.helpinghands.HelpingHands.entities.InventoryBloodBank;
+import com.helpinghands.HelpingHands.entities.*;
+import com.helpinghands.HelpingHands.repository.Temporarydatabaseofincidentdao;
 import com.helpinghands.HelpingHands.services.InventoryBloodBankService;
 import com.helpinghands.HelpingHands.services.InventoryService;
 import com.helpinghands.HelpingHands.services.InventoryVehicleService;
@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.NoSuchElementException;
 
 @RequestMapping("/api/v1")
 @RestController
@@ -28,78 +30,114 @@ public class InventoryController {
         return this.inventoryService.getAllInventory();
     }
     @GetMapping("/inventory/{inventoryId}")
-    public ResponseEntity<Object> getInventoryById(@PathVariable("inventoryId") String id){
+    public Inventory getInventoryByincidentId(@PathVariable("inventoryId") String id){
         return this.inventoryService.getInventoryById(id);
     }
 
-    @GetMapping("/inventory/vehicle")
-    public ResponseEntity<Object> getAllVehicle(){
-        return this.inventoryVehicleService.getAllVehicle();
-    }
 
-    @GetMapping("/inventory/vehicle/{inventoryId}")
-    public ResponseEntity<Object> getAllVehicle(@PathVariable("inventoryId") String id){
-        return this.inventoryVehicleService.getAllVehicle();
-    }
 
     @GetMapping("/inventory/vehicle/{type}/{inventoryId}")
     public ResponseEntity<Object> getVehicleByType(@PathVariable("type") String vehicleType, @PathVariable("inventoryId") String inventoryId){
         return this.inventoryService.getVehicleByType(vehicleType,inventoryId);
     }
 
-    @GetMapping("/inventory/ambulance/{inventoryId}")
-    public ResponseEntity<Object> getAAmbulanceData(@PathVariable("inventoryId") String inventoryId){
-        return this.inventoryService.getAmbulanceData(inventoryId);
+    @GetMapping("/inventory/ambulance/{incidentId}")
+    public String  getAAmbulanceData(@PathVariable String incidentId){
+        return this.inventoryService.getAmbulanceData(incidentId);
     }
 
-    @GetMapping("/inventory/blood/{inventoryId}")
-    public ResponseEntity<Object> getAllBloodData(@PathVariable("inventoryId") String inventoryId){
-        return this.inventoryService.getAllBloodData(inventoryId);
+    @GetMapping("/inventory/blood/{incidentId}")
+    public String getAllBloodData(@PathVariable String incidentId){
+        return this.inventoryService.getAllBloodData(incidentId);
     }
 
-    @GetMapping("/inventory/watergallon/{inventoryId}")
-    public ResponseEntity<Object> getWaterGallonData(@PathVariable("inventoryId") String inventoryId){
-        return this.inventoryService.getWaterGallon(inventoryId);
+    @GetMapping("/inventory/watergallon/{incidentId}")
+    public String getWaterGallonData(@PathVariable String incidentId){
+        return this.inventoryService.getWaterGallon(incidentId);
     }
 
-    @GetMapping("/inventory/foodpacket/{inventoryId}")
-    public ResponseEntity<Object> getFoodPacketData(@PathVariable("inventoryId") String inventoryId){
-        return this.inventoryService.getFoodPacket(inventoryId);
+    @GetMapping("/inventory/foodpacket/{incidentId}")
+    public String getFoodPacketData(@PathVariable String incidentId){
+        return this.inventoryService.getFoodPacket(incidentId);
     }
 
-    @GetMapping("/inventory/beds/{inventoryId}")
-    public ResponseEntity<Object> getBedData(@PathVariable("inventoryId") String inventoryId){
-        return this.inventoryService.getBedData(inventoryId);
+    @GetMapping("/inventory/beds/{incidentId}")
+    public String getBedData(@PathVariable String incidentId){
+        return this.inventoryService.getBedData(incidentId);
     }
 
-    @GetMapping("/inventory/nurse/{inventoryId}")
-    public ResponseEntity<Object> getNurse(@PathVariable("inventoryId") String inventoryId){
-        return this.inventoryService.getNurseData(inventoryId);
+    @GetMapping("/inventory/nurse/{incidentId}")
+    public String getNurse(@PathVariable String incidentId){
+        return this.inventoryService.getNurseData(incidentId);
     }
 
-    @GetMapping("/inventory/doctors/{inventoryId}")
-    public ResponseEntity<Object> getDoctors(@PathVariable("inventoryId") String inventoryId){
-        return this.inventoryService.getDoctorsData(inventoryId);
+    @GetMapping("/inventory/doctors/{incidentId}")
+    public String getDoctors(@PathVariable String incidentId){
+        return this.inventoryService.getDoctorsData(incidentId);
     }
 
-    @GetMapping("/inventory/firstaids/{inventoryId}")
-    public ResponseEntity<Object> getFirstAid(@PathVariable("inventoryId") String inventoryId){
-        return this.inventoryService.getFirstAids(inventoryId);
+    @GetMapping("/inventory/firstaids/{incidentId}")
+    public String getFirstAid(@PathVariable String incidentId){
+        return this.inventoryService.getFirstAids(incidentId);
     }
 
-    @GetMapping("/inventory/animalsfood/{inventoryId}")
-    public ResponseEntity<Object> getAnimalsFood(@PathVariable("inventoryId") String inventoryId){
-        return this.inventoryService.getAnimalsFood(inventoryId);
+    @GetMapping("/inventory/animalsfood/{incidentId}")
+    public String getAnimalsFood(@PathVariable String incidentId){
+        return this.inventoryService.getAnimalsFood(incidentId);
     }
 
-    @PostMapping("/inventory")
-    public ResponseEntity<Object> addInventory(@RequestBody Inventory newInventory){
-        return this.inventoryService.addNewInventory(newInventory);
+    @PostMapping("/addInventoryToIncident/{incidentId}")
+    public Temporarydatabaseofincident addInventoryToIncident(@PathVariable String incidentId , @RequestBody Inventory newInventory){
+        return  this.inventoryService.addInventoryToIncident(incidentId, newInventory);
     }
 
-    @PutMapping("/inventory/bloodbank/{inventoryId}")
-    public ResponseEntity<Object> updateBloodBank(@PathVariable("inventoryId") String inventoryId,@RequestBody InventoryBloodBank inventoryBloodBank){
-        return this.inventoryBloodBankService.updateBloodBank(inventoryId, inventoryBloodBank);
+    @PutMapping("updateBloodBankForIncident/{incidentId}")
+    public InventoryBloodBank updateBloodBankForIncident(@PathVariable String incidentId, @RequestBody InventoryBloodBank inventoryBloodBank) throws NoSuchElementException{
+        return this.inventoryBloodBankService.updateBloodBank(incidentId,inventoryBloodBank);
+    }
+
+    @GetMapping("/getCountOfVehicleUsedInIncident/{incidentId}")
+    public InventoryVehicle geCountOfVehicleUsedInIncident(@PathVariable String incidentId) throws NoSuchElementException{
+        return this.inventoryVehicleService.getAllVehicleUsedInIncident(incidentId);
+    }
+
+    @PutMapping("/updateVehicleForIncident/{incidentId}")
+    public InventoryVehicle updateVehicleForIncident(@PathVariable String incidentId, @RequestBody InventoryVehicle vehicle) throws NoSuchElementException {
+        return this.inventoryVehicleService.updateVehicleCountForIncident(incidentId,vehicle);
+    }
+
+    @PutMapping("/updateWaterGallonForIncident/{incidentId}")
+    public String updateWaterGallon(@PathVariable String incidentId, long waterGallon) throws NoSuchElementException{
+    return this.inventoryService.updateWaterGallon(incidentId,waterGallon);
+    }
+    @PutMapping("/updateFoodPacketForIncident/{incidentId}")
+    public String  updateFoodPacket(@PathVariable String incidentId, long foodPacket)throws NoSuchElementException{
+    return this.inventoryService.updateFoodPacket(incidentId,foodPacket);
+    }
+    @PutMapping("/updateFirstAidsForIncident/{incidentId}")
+    public String updateFirstAids(@PathVariable String incidentId, long firstAids)throws NoSuchElementException{
+        return this.inventoryService.updateFirstAids(incidentId, firstAids);
+
+    }
+    @PutMapping("/updateDoctorForIncident/{incidentId}")
+    public String updateDoctors(@PathVariable String incidentId, long doctors)throws NoSuchElementException{
+        return this.inventoryService.updateDoctor(incidentId,doctors);
+    }
+    @PutMapping("/updateNurseForIncident/{incidentId}")
+    public String updateNurse(@PathVariable String incidentId, long nurse)throws NoSuchElementException{
+        return this.inventoryService.updateNurse(incidentId,nurse);
+    }
+    @PutMapping("/updateAnimalFoodForIncident/{incidentId}")
+    public String updateAnimalFoods(@PathVariable String incidentId, long animalFoods)throws NoSuchElementException{
+        return this.inventoryService.updateAnimalFoods(incidentId,animalFoods);
+    }
+    @PutMapping("/updateAmbulanceForIncident/{incidentId}")
+    public String updateAmbulance(@PathVariable String incidentId, long ambulance)throws NoSuchElementException{
+        return this.inventoryService.updateAmbulance(incidentId,ambulance);
+    }
+    @PutMapping("/updateBedsForIncident/{incidentId}")
+    public String updateBeds(@PathVariable String incidentId, long beds)throws NoSuchElementException{
+        return this.inventoryService.updateBeds(incidentId,beds);
     }
 
 

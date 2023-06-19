@@ -72,8 +72,10 @@ public class IncidentTrackcontroller {
 
     }
     @GetMapping(Constants.GET_ALL_INCIDENT_OF_AREA)
-    public List<Centralrepositoryofincident> getAllIncincidentOfArea(@RequestHeader String postalCode) throws EmptyListException{
-        return this.incidenttrackservice.findAllIncidentInArea(postalCode);
+    public List<Centralrepositoryofincident> getAllIncincidentOfArea(@RequestHeader String postalCode) throws NoSuchElementException,EmptyListException{
+        List<Centralrepositoryofincident> Incidents= this.incidenttrackservice.findAllIncidentInArea(postalCode);
+        if(Incidents.size()>0 ) return Incidents;
+        else throw new EmptyListException("no incident happen in area");
     }
     @GetMapping(Constants.FIND_TOTAL_INCIDENT_APPROVE_BY_ADMIN)
     public List<Object> FindTotalIncidentApproveByAdmin(@RequestHeader String adminId) throws NoSuchElementException,EmptyListException{

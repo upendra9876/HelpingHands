@@ -67,12 +67,12 @@ public class incidenttrackserviceimpletation implements Incidenttrackservice{
     }
 
     @Override
-    public List<Centralrepositoryofincident> findAllIncidentInArea(String postalcode) throws EmptyListException {
+    public List<Centralrepositoryofincident> findAllIncidentInArea(String postalcode) throws NoSuchElementException {
         Location location = locationdao.findById(postalcode).get();
         if(location!=null){
             return location.getCentralrepositoryofincidentList();
         }
-        else throw new EmptyListException("postal code invalid");
+        else throw new NoSuchElementException("postal code invalid");
     }
 
     @Override

@@ -43,12 +43,13 @@ public class Applicationexceptioncontroller {
         errormap.put("es","1");
         return errormap;
     }
-@ResponseStatus(HttpStatus.NOT_FOUND)
+        @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NoSuchElementException.class)
     public Map<String,String> nosuchelementexception(NoSuchElementException exc){
         Map<String ,String> errormap= new HashMap<>();
+
+        errormap.put("Error Message",exc.getMessage());
         errormap.put("es","1");
-        errormap.put("Error Message",exc.getLocalizedMessage());
 
         return errormap;
     }
