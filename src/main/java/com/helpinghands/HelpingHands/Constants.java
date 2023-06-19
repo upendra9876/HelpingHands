@@ -7,7 +7,7 @@ public class Constants {
     public static final String GET_ALL_INCIDENT="/getAllActiveIncident";
     public static final String TOTAL_CASULAITY_BY_INCIDENT= "/totalCasualityByIncident/{incidentId}";
     public static final String GET_ALL_INCIDENT_HAPPEN ="/getAllIncidentsOfCountry";
-    public static final String REPORT_INCIDENT="/addLocal";
+    public static final String REPORT_INCIDENT="/reportCasuality";
     public static final String VERIFY_INCIDENT_BY_AREA_ADMIN="/verifyIncident";
     public static final String GET_ADMIN_OF_AREA="/getAdmin";
     public static final String SET_INCIDENT_EFFECT_END_DATE="/setIncidentEndDate";

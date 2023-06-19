@@ -3,15 +3,18 @@ package com.helpinghands.HelpingHands.services;
 import com.helpinghands.HelpingHands.Constants;
 import com.helpinghands.HelpingHands.entities.Inventory;
 import com.helpinghands.HelpingHands.entities.InventoryVehicle;
+import com.helpinghands.HelpingHands.entities.Temporarydatabaseofincident;
 import com.helpinghands.HelpingHands.repository.InventoryBloodBankRepository;
 import com.helpinghands.HelpingHands.repository.InventoryRepository;
 import com.helpinghands.HelpingHands.repository.InventoryVehicleRepository;
+import com.helpinghands.HelpingHands.repository.Temporarydatabaseofincidentdao;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -27,6 +30,22 @@ public class InventoryServiceImplementation implements InventoryService{
     @Autowired
     private InventoryBloodBankRepository inventoryBloodBankRepository;
 
+    @Autowired
+    private Temporarydatabaseofincidentdao temporarydatabaseofincidentdao;
+
+    @Override
+    public Temporarydatabaseofincident addInventoryToIncident(String incidentId, Inventory inventory)
+    {
+        Temporarydatabaseofincident incident= temporarydatabaseofincidentdao.findById(incidentId).get();
+        if(incident!=null) {
+                inventoryRepository.save(inventory);
+                incident.setInventory(inventory);
+                temporarydatabaseofincidentdao.save(incident);
+                return incident;
+        }
+        else throw new NoSuchElementException("no incident found");
+    }
+
     @Override
     public ResponseEntity getAllInventory(){
         List<Inventory> allInventory = this.inventoryRepository.findAll();
@@ -37,12 +56,12 @@ public class InventoryServiceImplementation implements InventoryService{
     }
 
     @Override
-    public ResponseEntity getInventoryById(String id){
-        Optional<Inventory> inventory = this.inventoryRepository.findById(id);
-        if(inventory.isEmpty()){
-            return new ResponseEntity<>("No Content Found",HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(inventory.get(), HttpStatus.OK);
+    public Inventory getInventoryById(String incidentId) throws NoSuchElementException {
+        Temporarydatabaseofincident incident = temporarydatabaseofincidentdao.findById(incidentId).get();
+        if(incident!=null) {
+            return incident.getInventory();
+        } else throw new NoSuchElementException("no incident found");
+
     }
     @Override
     public ResponseEntity<Object> getVehicleByType(String vehicleType, String inventoryId){
@@ -63,98 +82,183 @@ public class InventoryServiceImplementation implements InventoryService{
     }
 
     @Override
-    public ResponseEntity<Object> getAmbulanceData(String inventoryId){
-        Optional<Inventory> inventory = this.inventoryRepository.findById(inventoryId);
-        if(inventory.isEmpty()){
-            return new ResponseEntity<>(Constants.DATA_NOT_FOUND,HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(inventory.get().getAmbulance(),HttpStatus.OK);
+    public String getAmbulanceData(String incidentId)throws NoSuchElementException{
+        Temporarydatabaseofincident incident = temporarydatabaseofincidentdao.findById(incidentId).get();
+        if(incident!=null) {
+
+            return " Ambulance = "+incident.getInventory().getAmbulance();
+        } else throw new NoSuchElementException("no incident found");
     }
 
     @Override
-    public ResponseEntity<Object> getWaterGallon(String inventoryId){
-        Optional<Inventory> inventory = this.inventoryRepository.findById(inventoryId);
-        if(inventory.isPresent()){
-            return new ResponseEntity<>(inventory.get().getWaterGallon(),HttpStatus.OK);
-        }
-        return new ResponseEntity<>(Constants.DATA_NOT_FOUND,HttpStatus.NOT_FOUND);
+    public String getWaterGallon(String incidentId)throws NoSuchElementException{
+        Temporarydatabaseofincident incident = temporarydatabaseofincidentdao.findById(incidentId).get();
+        if(incident!=null) {
+            return "waterGallon = "+ incident.getInventory().getWaterGallon();
+        } else throw new NoSuchElementException("no incident found");
     }
 
     @Override
-    public ResponseEntity<Object> getFoodPacket(String inventoryId){
-        Optional<Inventory> inventory = this.inventoryRepository.findById(inventoryId);
-        if(inventory.isPresent()){
-            return new ResponseEntity<>(inventory.get().getFoodPacket(),HttpStatus.OK);
-        }
-        return new ResponseEntity<>(Constants.DATA_NOT_FOUND,HttpStatus.NOT_FOUND);
+    public String  getFoodPacket(String incidentId)throws NoSuchElementException{
+        Temporarydatabaseofincident incident = temporarydatabaseofincidentdao.findById(incidentId).get();
+        if(incident!=null) {
+            return "foodPacket "+ incident.getInventory().getFoodPacket();
+        } else throw new NoSuchElementException("no incident found");
     }
 
     @Override
-    public ResponseEntity<Object> getAllBloodData(String inventoryId){
-        Optional<Inventory> inventory = this.inventoryRepository.findById(inventoryId);
-        if(inventory.isEmpty()){
-            return new ResponseEntity<>(Constants.DATA_NOT_FOUND,HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(inventory.get().getBloodBank(),HttpStatus.OK);
+    public String getAllBloodData(String incidentId)throws NoSuchElementException{
+        Temporarydatabaseofincident incident = temporarydatabaseofincidentdao.findById(incidentId).get();
+        if(incident!=null) {
+            return "Bllod Available = "+ incident.getInventory().getBloodBank();
+        } else throw new NoSuchElementException("no incident found");
     }
 
     @Override
-    public ResponseEntity<Object> getBedData(String inventoryId){
-        Optional<Inventory> inventory = this.inventoryRepository.findById(inventoryId);
-        if(inventory.isEmpty()){
-            return new ResponseEntity<>(Constants.DATA_NOT_FOUND,HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(inventory.get().getBeds(),HttpStatus.OK);
+    public String getBedData(String incidentId)throws NoSuchElementException{
+        Temporarydatabaseofincident incident = temporarydatabaseofincidentdao.findById(incidentId).get();
+        if(incident!=null) {
+            return "Bed Available = " + incident.getInventory().getBeds();
+        } else throw new NoSuchElementException("no incident found");
     }
 
     @Override
-    public ResponseEntity<Object> getAnimalsFood(String inventoryId){
-        Optional<Inventory> inventory = this.inventoryRepository.findById(inventoryId);
-        if(inventory.isEmpty()){
-            return new ResponseEntity<>(Constants.DATA_NOT_FOUND,HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(inventory.get().getAnimalsFood(),HttpStatus.OK);
+    public String  getAnimalsFood(String incidentId)throws NoSuchElementException{
+        Temporarydatabaseofincident incident = temporarydatabaseofincidentdao.findById(incidentId).get();
+        if(incident!=null) {
+            return " Animal food = "+ incident.getInventory().getAnimalsFood();
+        } else throw new NoSuchElementException("no incident found");
     }
 
     @Override
-    public ResponseEntity<Object> getFirstAids(String inventoryId){
-        Optional<Inventory> inventory = this.inventoryRepository.findById(inventoryId);
-        if(inventory.isEmpty()){
-            return new ResponseEntity<>(Constants.DATA_NOT_FOUND,HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(inventory.get().getFirstAids(),HttpStatus.OK);
+    public String  getFirstAids(String incidentId)throws NoSuchElementException{
+        Temporarydatabaseofincident incident = temporarydatabaseofincidentdao.findById(incidentId).get();
+        if(incident!=null) {
+            return " first aids =" + incident.getInventory().getFirstAids();
+        } else throw new NoSuchElementException("no incident found");
     }
 
     @Override
-    public ResponseEntity<Object> getDoctorsData(String inventoryId){
-        Optional<Inventory> inventory = this.inventoryRepository.findById(inventoryId);
-        if(inventory.isPresent()) {
-            return new ResponseEntity<>(inventory.get().getDoctor(), HttpStatus.OK);
-        }
-        return new ResponseEntity<>(Constants.DATA_NOT_FOUND,HttpStatus.NOT_FOUND);
+    public String  getDoctorsData(String incidentId)throws NoSuchElementException{
+        Temporarydatabaseofincident incident = temporarydatabaseofincidentdao.findById(incidentId).get();
+        if(incident!=null) {
+            return "Doctors Available = "+ incident.getInventory().getDoctor();
+        } else throw new NoSuchElementException("no incident found");
     }
 
     @Override
-    public ResponseEntity<Object> getNurseData(String inventoryId){
-        Optional<Inventory> inventory = this.inventoryRepository.findById(inventoryId);
-        if(inventory.isEmpty()){
-            return new ResponseEntity<>(Constants.DATA_NOT_FOUND,HttpStatus.NOT_FOUND);
+    public String updateWaterGallon(String incidentId, long waterGallon) {
+        Temporarydatabaseofincident incident = temporarydatabaseofincidentdao.findById(incidentId).get();
+        if(incident!=null){
+            Inventory inventory = incident.getInventory();
+            inventory.setWaterGallon(inventory.getWaterGallon()+waterGallon);
+            inventoryRepository.save(inventory);
+            return "Available waterGallons are " + inventory.getWaterGallon();
         }
-        return new ResponseEntity<>(inventory.get().getNurse(),HttpStatus.OK);
+        else throw new NoSuchElementException("wrong incident id");
     }
 
     @Override
-    public ResponseEntity addNewInventory(Inventory newInventory){
-        try{
-            this.inventoryVehicleRepository.save(newInventory.getVehicle());
-            this.inventoryBloodBankRepository.save(newInventory.getBloodBank());
-            this.inventoryRepository.save(newInventory);
-            return new ResponseEntity<>("New Inventory Added",HttpStatus.OK);
-        }catch (Exception e){
-            log.error(e);
-            return new ResponseEntity<>("Some Error Occurred",HttpStatus.SERVICE_UNAVAILABLE);
+    public String updateFirstAids(String incidentId, long firstAids) throws NoSuchElementException{
+        Temporarydatabaseofincident incident = temporarydatabaseofincidentdao.findById(incidentId).get();
+        if(incident!=null){
+            Inventory inventory = incident.getInventory();
+            inventory.setFirstAids(inventory.getFirstAids()+firstAids);
+            inventoryRepository.save(inventory);
+            return "Availale first aids are " + inventory.getFirstAids();
+
         }
+        else throw new NoSuchElementException("wrong incident id");
+
     }
+
+    @Override
+    public String updateNurse(String incidentId, long nurse) throws NoSuchElementException{
+        Temporarydatabaseofincident incident = temporarydatabaseofincidentdao.findById(incidentId).get();
+        if(incident!=null){
+            Inventory inventory = incident.getInventory();
+            inventory.setNurse(inventory.getNurse()+nurse);
+            inventoryRepository.save(inventory);
+            return "Available nurses are " + inventory.getNurse();
+        }
+        else throw new NoSuchElementException("wrong incident id");
+
+    }
+
+    @Override
+    public String updateDoctor(String incidentId, long doctors) throws NoSuchElementException{
+        Temporarydatabaseofincident incident = temporarydatabaseofincidentdao.findById(incidentId).get();
+        if(incident!=null){
+            Inventory inventory = incident.getInventory();
+            inventory.setDoctor(inventory.getDoctor()+doctors);
+            inventoryRepository.save(inventory);
+            return "Available doctors are " + inventory.getDoctor();
+        }
+        else throw new NoSuchElementException("wrong incident id");
+
+    }
+
+    @Override
+    public String updateAmbulance(String incidentId, long ambulance) throws NoSuchElementException{
+        Temporarydatabaseofincident incident = temporarydatabaseofincidentdao.findById(incidentId).get();
+        if(incident!=null){
+            Inventory inventory = incident.getInventory();
+            inventory.setAmbulance(inventory.getAmbulance()+ambulance);
+            inventoryRepository.save(inventory);
+            return "available ambulance are "+ inventory.getAmbulance();
+        }
+        else throw new NoSuchElementException("wrong incident id");
+
+    }
+
+    @Override
+    public String updateAnimalFoods(String incidentId, long animalFoods) throws NoSuchElementException{
+        Temporarydatabaseofincident incident = temporarydatabaseofincidentdao.findById(incidentId).get();
+        if(incident!=null){
+            Inventory inventory = incident.getInventory();
+            inventory.setAnimalsFood(inventory.getAnimalsFood()+animalFoods);
+            inventoryRepository.save(inventory);
+            return "available Animal Foods are "+ inventory.getAnimalsFood();
+        }
+        else throw new NoSuchElementException("wrong incident id");
+
+    }
+
+    @Override
+    public String updateBeds(String incidentId, long beds)throws NoSuchElementException {
+        Temporarydatabaseofincident incident = temporarydatabaseofincidentdao.findById(incidentId).get();
+        if(incident!=null){
+            Inventory inventory = incident.getInventory();
+            inventory.setBeds(inventory.getBeds()+beds);
+            inventoryRepository.save(inventory);
+            return "available Beds are "+ inventory.getBeds();
+        }
+        else throw new NoSuchElementException("wrong incident id");
+
+    }
+
+    @Override
+    public String updateFoodPacket(String incidentId, long foodPackets) throws NoSuchElementException{
+        Temporarydatabaseofincident incident = temporarydatabaseofincidentdao.findById(incidentId).get();
+        if(incident!=null){
+            Inventory inventory = incident.getInventory();
+            inventory.setFoodPacket(inventory.getFoodPacket()+foodPackets);
+            inventoryRepository.save(inventory);
+            return "available foodpackets are "+ inventory.getFoodPacket();
+        }
+        else throw new NoSuchElementException("wrong incident id");
+
+    }
+
+    @Override
+    public String getNurseData(String incidentId)throws NoSuchElementException {
+        Temporarydatabaseofincident temporarydatabaseofincident= temporarydatabaseofincidentdao.findById(incidentId).get();
+        if(temporarydatabaseofincident!=null){
+            return "Nurse available ="+ temporarydatabaseofincident.getInventory().getNurse();
+        }
+        else throw new NoSuchElementException("no incident found");
+    }
+
 
 
 

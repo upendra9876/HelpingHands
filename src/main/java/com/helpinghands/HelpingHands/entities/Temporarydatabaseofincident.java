@@ -64,6 +64,8 @@ public class Temporarydatabaseofincident {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "inventory")
     private Inventory inventory;
+
+
 }
 
 
