@@ -1,5 +1,6 @@
 package com.helpinghands.HelpingHands.services;
 
+import com.helpinghands.HelpingHands.Constants;
 import com.helpinghands.HelpingHands.entities.Inventory;
 import com.helpinghands.HelpingHands.entities.InventoryVehicle;
 import com.helpinghands.HelpingHands.repository.InventoryBloodBankRepository;
@@ -45,23 +46,27 @@ public class InventoryServiceImplementation implements InventoryService{
     }
     @Override
     public ResponseEntity<Object> getVehicleByType(String vehicleType, String inventoryId){
-        String inventoryVehicleId = this.inventoryRepository.findById(inventoryId).get().getVehicle().getId();
-        InventoryVehicle data = this.inventoryVehicleRepository.getVehicleDataByType(inventoryVehicleId);
+        Optional<Inventory> inventory= this.inventoryRepository.findById(inventoryId);
+        if(inventory.isEmpty()){
+            return new ResponseEntity<>(Constants.DATA_NOT_FOUND,HttpStatus.NOT_FOUND);
+        }
+        InventoryVehicle data = this.inventoryVehicleRepository.getVehicleDataByType(inventory.get().getVehicle().getId());
         if(vehicleType.equals("land")){
             return new ResponseEntity<>(vehicleType+":"+data.getLand(),HttpStatus.OK);
         }else if (vehicleType.equals("air")){
             return new ResponseEntity<>(vehicleType+":"+data.getAir(),HttpStatus.OK);
         } else if (vehicleType.equals("water")) {
             return new ResponseEntity<>(vehicleType+":"+data.getWater(),HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(Constants.DATA_NOT_FOUND,HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>("Data not Found",HttpStatus.NOT_FOUND);
     }
 
     @Override
     public ResponseEntity<Object> getAmbulanceData(String inventoryId){
         Optional<Inventory> inventory = this.inventoryRepository.findById(inventoryId);
         if(inventory.isEmpty()){
-            return new ResponseEntity<>("Data not Found",HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(Constants.DATA_NOT_FOUND,HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(inventory.get().getAmbulance(),HttpStatus.OK);
     }
@@ -72,7 +77,7 @@ public class InventoryServiceImplementation implements InventoryService{
         if(inventory.isPresent()){
             return new ResponseEntity<>(inventory.get().getWaterGallon(),HttpStatus.OK);
         }
-        return new ResponseEntity<>("No data Found",HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(Constants.DATA_NOT_FOUND,HttpStatus.NOT_FOUND);
     }
 
     @Override
@@ -81,14 +86,14 @@ public class InventoryServiceImplementation implements InventoryService{
         if(inventory.isPresent()){
             return new ResponseEntity<>(inventory.get().getFoodPacket(),HttpStatus.OK);
         }
-        return new ResponseEntity<>("No data Found",HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(Constants.DATA_NOT_FOUND,HttpStatus.NOT_FOUND);
     }
 
     @Override
     public ResponseEntity<Object> getAllBloodData(String inventoryId){
         Optional<Inventory> inventory = this.inventoryRepository.findById(inventoryId);
         if(inventory.isEmpty()){
-            return new ResponseEntity<>("Data not Found",HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(Constants.DATA_NOT_FOUND,HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(inventory.get().getBloodBank(),HttpStatus.OK);
     }
@@ -97,7 +102,7 @@ public class InventoryServiceImplementation implements InventoryService{
     public ResponseEntity<Object> getBedData(String inventoryId){
         Optional<Inventory> inventory = this.inventoryRepository.findById(inventoryId);
         if(inventory.isEmpty()){
-            return new ResponseEntity<>("Data not Found",HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(Constants.DATA_NOT_FOUND,HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(inventory.get().getBeds(),HttpStatus.OK);
     }
@@ -106,7 +111,7 @@ public class InventoryServiceImplementation implements InventoryService{
     public ResponseEntity<Object> getAnimalsFood(String inventoryId){
         Optional<Inventory> inventory = this.inventoryRepository.findById(inventoryId);
         if(inventory.isEmpty()){
-            return new ResponseEntity<>("Data not Found",HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(Constants.DATA_NOT_FOUND,HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(inventory.get().getAnimalsFood(),HttpStatus.OK);
     }
@@ -115,7 +120,7 @@ public class InventoryServiceImplementation implements InventoryService{
     public ResponseEntity<Object> getFirstAids(String inventoryId){
         Optional<Inventory> inventory = this.inventoryRepository.findById(inventoryId);
         if(inventory.isEmpty()){
-            return new ResponseEntity<>("Data not Found",HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(Constants.DATA_NOT_FOUND,HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(inventory.get().getFirstAids(),HttpStatus.OK);
     }
@@ -123,17 +128,17 @@ public class InventoryServiceImplementation implements InventoryService{
     @Override
     public ResponseEntity<Object> getDoctorsData(String inventoryId){
         Optional<Inventory> inventory = this.inventoryRepository.findById(inventoryId);
-        if(inventory.isEmpty()){
-            return new ResponseEntity<>("Data not Found",HttpStatus.NOT_FOUND);
+        if(inventory.isPresent()) {
+            return new ResponseEntity<>(inventory.get().getDoctor(), HttpStatus.OK);
         }
-        return new ResponseEntity<>(inventory.get().getDoctor(),HttpStatus.OK);
+        return new ResponseEntity<>(Constants.DATA_NOT_FOUND,HttpStatus.NOT_FOUND);
     }
 
     @Override
     public ResponseEntity<Object> getNurseData(String inventoryId){
         Optional<Inventory> inventory = this.inventoryRepository.findById(inventoryId);
         if(inventory.isEmpty()){
-            return new ResponseEntity<>("Data not Found",HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(Constants.DATA_NOT_FOUND,HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(inventory.get().getNurse(),HttpStatus.OK);
     }
