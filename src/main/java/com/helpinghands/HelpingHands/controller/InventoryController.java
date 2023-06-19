@@ -1,6 +1,8 @@
 package com.helpinghands.HelpingHands.controller;
 
 import com.helpinghands.HelpingHands.entities.Inventory;
+import com.helpinghands.HelpingHands.entities.InventoryBloodBank;
+import com.helpinghands.HelpingHands.services.InventoryBloodBankService;
 import com.helpinghands.HelpingHands.services.InventoryService;
 import com.helpinghands.HelpingHands.services.InventoryVehicleService;
 import lombok.extern.log4j.Log4j2;
@@ -16,7 +18,8 @@ public class InventoryController {
 
     @Autowired
     private InventoryService inventoryService;
-
+    @Autowired
+    private InventoryBloodBankService inventoryBloodBankService;
     @Autowired
     private InventoryVehicleService inventoryVehicleService;
 
@@ -92,6 +95,11 @@ public class InventoryController {
     @PostMapping("/inventory")
     public ResponseEntity<Object> addInventory(@RequestBody Inventory newInventory){
         return this.inventoryService.addNewInventory(newInventory);
+    }
+
+    @PutMapping("/inventory/bloodbank/{inventoryId}")
+    public ResponseEntity<Object> updateBloodBank(@PathVariable("inventoryId") String inventoryId,@RequestBody InventoryBloodBank inventoryBloodBank){
+        return this.inventoryBloodBankService.updateBloodBank(inventoryId, inventoryBloodBank);
     }
 
 

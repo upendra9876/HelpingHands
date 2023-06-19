@@ -2,6 +2,8 @@ package com.helpinghands.HelpingHands;
 
 public class Constants {
 
+    public static final String DATA_NOT_FOUND = "Data not Found";
+
     public static final String GET_ALL_INCIDENT="/getAllActiveIncident";
     public static final String TOTAL_CASULAITY_BY_INCIDENT= "/totalCasualityByIncident/{incidentId}";
     public static final String GET_ALL_INCIDENT_HAPPEN ="/getAllIncidentsOfCountry";
