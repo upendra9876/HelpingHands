@@ -1,5 +1,6 @@
 package com.helpinghands.HelpingHands.services;
 
+import com.helpinghands.HelpingHands.dto.ReportIncident;
 import com.helpinghands.HelpingHands.entities.*;
 import com.helpinghands.HelpingHands.exception.EmptyListException;
 
@@ -13,7 +14,7 @@ public interface Incidenttrackservice {
 
     public List<Centralrepositoryofincident> getAllIncidentHappens() throws EmptyListException;
 
-    public Location reportTheIncident(Temporarydatabaseofincident incident, String userId);//also send userid
+    public Location reportTheIncident(ReportIncident incident, String userId);//also send userid
     public void incidentVerificationByAdmin(String incidentId);
 
     public Admin getAdminOfArea(String postalcode);
@@ -22,9 +23,9 @@ public interface Incidenttrackservice {
 
     public Centralrepositoryofincident incidentEnd(String id, LocalDate enddate);
 
-    public List<Centralrepositoryofincident> findAllIncidentInArea(String postalcode) throws NoSuchElementException;
+    public List<Centralrepositoryofincident> findAllIncidentInArea(String postalcode) throws NoSuchElementException, EmptyListException;
 
-    public List<Object> findTotalIncidentApproveByAdmin(String adminId) throws EmptyListException, NoSuchElementException;
+    public List<Object> findTotalIncidentApproveByAdmin(String adminId) throws Exception;
 
     public List<Centralrepositoryofincident> findIncidentsBetweenDuration();
 

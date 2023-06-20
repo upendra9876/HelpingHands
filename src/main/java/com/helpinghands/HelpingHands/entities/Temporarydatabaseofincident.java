@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.aspectj.weaver.ast.Or;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -13,6 +14,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -64,6 +66,10 @@ public class Temporarydatabaseofincident {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "inventory")
     private Inventory inventory;
+
+    @OneToMany
+    @JoinColumn(name = "incident_id")
+    private List<Organisation> organisations;
 
 
 }
