@@ -2,6 +2,9 @@ package com.helpinghands.HelpingHands.advice;
 
 import com.helpinghands.HelpingHands.exception.EmptyListException;
 import com.helpinghands.HelpingHands.exception.ValidIncidentidexception;
+import jakarta.persistence.Lob;
+import lombok.extern.java.Log;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -12,7 +15,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.logging.Logger;
 
+@Log4j2
+@Log
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 @RestControllerAdvice
 public class Applicationexceptioncontroller {
@@ -45,10 +51,9 @@ public class Applicationexceptioncontroller {
     }
         @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NoSuchElementException.class)
-    public Map<String,String> nosuchelementexception(NoSuchElementException exc){
+    public Map<String,String> noSuchElementException(NoSuchElementException noSuchElementException){
         Map<String ,String> errormap= new HashMap<>();
-
-        errormap.put("Error Message",exc.getMessage());
+        errormap.put("Error Message", noSuchElementException.getMessage());
         errormap.put("es","1");
 
         return errormap;

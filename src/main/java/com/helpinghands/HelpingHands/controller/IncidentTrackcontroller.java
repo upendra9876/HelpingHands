@@ -1,6 +1,7 @@
 package com.helpinghands.HelpingHands.controller;
 
 import com.helpinghands.HelpingHands.Constants;
+import com.helpinghands.HelpingHands.dto.ReportIncident;
 import com.helpinghands.HelpingHands.entities.*;
 import com.helpinghands.HelpingHands.exception.EmptyListException;
 import com.helpinghands.HelpingHands.repository.AdminDao;
@@ -52,7 +53,7 @@ public class IncidentTrackcontroller {
         return this.incidenttrackservice.getAllIncidentHappens();
     }
     @PostMapping(Constants.REPORT_INCIDENT)
-    public Location addIncident(@RequestBody @Valid Temporarydatabaseofincident incident, @RequestHeader String userId) throws MethodArgumentNotValidException,IllegalStateException {
+    public Location addIncident(@RequestBody @Valid ReportIncident incident, @RequestHeader String userId) throws MethodArgumentNotValidException,IllegalStateException {
        return  this.incidenttrackservice.reportTheIncident(incident,userId);
     }
 
@@ -78,7 +79,7 @@ public class IncidentTrackcontroller {
         else throw new EmptyListException("no incident happen in area");
     }
     @GetMapping(Constants.FIND_TOTAL_INCIDENT_APPROVE_BY_ADMIN)
-    public List<Object> FindTotalIncidentApproveByAdmin(@RequestHeader String adminId) throws NoSuchElementException,EmptyListException{
+    public List<Object> FindTotalIncidentApproveByAdmin(@RequestHeader String adminId) throws Exception{
         return this.incidenttrackservice.findTotalIncidentApproveByAdmin(adminId);
     }
 
@@ -97,7 +98,7 @@ public class IncidentTrackcontroller {
         return this.incidenttrackservice.getPostalByAdminId(adminId);
     }
     @GetMapping(Constants.OVERALL_CASULAITIES_IN_AREA)
-    public long overallCasualityInArea(@PathVariable String postal){
+    public long overallCasualityInArea(@PathVariable String postal) throws NoSuchElementException{
         return this.incidenttrackservice.overallCasualitiesByIncidentsInArea(postal);
     }
     @GetMapping(Constants.FIND_ALL_INCIDENT_RAISE_BY_USER)
