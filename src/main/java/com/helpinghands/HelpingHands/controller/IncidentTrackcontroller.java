@@ -1,6 +1,7 @@
 package com.helpinghands.HelpingHands.controller;
 
 import com.helpinghands.HelpingHands.Constants;
+import com.helpinghands.HelpingHands.dto.ReportIncident;
 import com.helpinghands.HelpingHands.entities.*;
 import com.helpinghands.HelpingHands.exception.EmptyListException;
 import com.helpinghands.HelpingHands.repository.AdminDao;
@@ -23,6 +24,7 @@ import java.util.NoSuchElementException;
 @RestController
 @RequestMapping("/api/v1")
 @Log4j2
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class IncidentTrackcontroller {
     @Autowired
     private Incidenttrackservice incidenttrackservice;
@@ -51,7 +53,7 @@ public class IncidentTrackcontroller {
         return this.incidenttrackservice.getAllIncidentHappens();
     }
     @PostMapping(Constants.REPORT_INCIDENT)
-    public Location addIncident(@RequestBody @Valid Temporarydatabaseofincident incident, @RequestHeader String userId) throws MethodArgumentNotValidException,IllegalStateException {
+    public Location addIncident(@RequestBody @Valid ReportIncident incident, @RequestHeader String userId) throws MethodArgumentNotValidException,IllegalStateException {
        return  this.incidenttrackservice.reportTheIncident(incident,userId);
     }
 
@@ -71,11 +73,13 @@ public class IncidentTrackcontroller {
 
     }
     @GetMapping(Constants.GET_ALL_INCIDENT_OF_AREA)
-    public List<Centralrepositoryofincident> getAllIncincidentOfArea(@RequestHeader String postalCode) throws EmptyListException{
-        return this.incidenttrackservice.findAllIncidentInArea(postalCode);
+    public List<Centralrepositoryofincident> getAllIncincidentOfArea(@RequestHeader String postalCode) throws NoSuchElementException,EmptyListException{
+        List<Centralrepositoryofincident> Incidents= this.incidenttrackservice.findAllIncidentInArea(postalCode);
+        if(Incidents.size()>0 ) return Incidents;
+        else throw new EmptyListException("no incident happen in area");
     }
     @GetMapping(Constants.FIND_TOTAL_INCIDENT_APPROVE_BY_ADMIN)
-    public List<Object> FindTotalIncidentApproveByAdmin(@RequestHeader String adminId) throws NoSuchElementException,EmptyListException{
+    public List<Object> FindTotalIncidentApproveByAdmin(@RequestHeader String adminId) throws Exception{
         return this.incidenttrackservice.findTotalIncidentApproveByAdmin(adminId);
     }
 
@@ -94,7 +98,7 @@ public class IncidentTrackcontroller {
         return this.incidenttrackservice.getPostalByAdminId(adminId);
     }
     @GetMapping(Constants.OVERALL_CASULAITIES_IN_AREA)
-    public long overallCasualityInArea(@PathVariable String postal){
+    public long overallCasualityInArea(@PathVariable String postal) throws NoSuchElementException{
         return this.incidenttrackservice.overallCasualitiesByIncidentsInArea(postal);
     }
     @GetMapping(Constants.FIND_ALL_INCIDENT_RAISE_BY_USER)
@@ -148,7 +152,18 @@ public class IncidentTrackcontroller {
         return this.locationdao.leastPronicAreaToIncident();
     }
 
+    @GetMapping(Constants.GET_LOCATION_BY_POSTAL_CODE)
+    public Location getLocationByPostalCode(@RequestHeader String postalCode) throws NoSuchElementException{
 
+        Location location=locationdao.getlocationbypostalcode(postalCode);
+        if(location!=null) return location;
+        else throw new NoSuchElementException("please enter valid postal code");
+    }
+
+    @GetMapping(Constants.INCIDENT_WITH_MAXIMUM_CASUALTY)
+    public List<Centralrepositoryofincident> getincidentwithmaxcasualty(){
+        return  this.centralrepositoryofincidentdao.getincidentwithmaximumcasualty();
+    }
 
     public Users getUserByIncidentInLocal(String id){
         return this.incidenttrackservice.getUserByIncidentInLocal(id);

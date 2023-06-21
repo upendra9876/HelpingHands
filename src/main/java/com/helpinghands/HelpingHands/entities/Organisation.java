@@ -9,14 +9,11 @@ import java.util.List;
 @Entity
 public class Organisation {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private String orgId;
-    private String organisationType;
-    private String incidentId ;
-    private long organisationNo;
-    private String inventoryId;
-    private String hospitalId;
-    private String bloodBankId;
-    private String ndrfNgoId;
+
+    private String name;
+
 
     @OneToMany(cascade = CascadeType.ALL,targetEntity = Hospital.class)
     @JoinColumn(name = "hospitalId")

@@ -16,6 +16,9 @@ public class Inventory {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String inventoryId;
 
+
+
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_vehicle")
     private InventoryVehicle vehicle;

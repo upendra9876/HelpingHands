@@ -1,9 +1,13 @@
 package com.helpinghands.HelpingHands.services;
 
+import com.helpinghands.HelpingHands.entities.InventoryVehicle;
 import org.springframework.http.ResponseEntity;
 
-public interface InventoryVehicleService {
-    ResponseEntity<Object> getAllVehicle();
+import java.util.NoSuchElementException;
 
-    ResponseEntity<Object> getVehicleByInventoryId(String inventoryId);
+public interface InventoryVehicleService {
+
+    public InventoryVehicle updateVehicleCountForIncident(String incidentId, InventoryVehicle vehicle) throws NoSuchElementException;
+
+    public InventoryVehicle getAllVehicleUsedInIncident(String incidentId) throws  NoSuchElementException;
 }

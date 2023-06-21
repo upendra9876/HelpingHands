@@ -20,7 +20,8 @@ public interface Centralrepositoryofincidentdao extends JpaRepository<Centralrep
     List<Centralrepositoryofincident> getallincidentbetweendate(@Param("startdate") LocalDate startdate, @Param("enddate") LocalDate enddate);
 
 
-
+    @Query("SELECT a from Centralrepositoryofincident a WHERE a.Casualty =( SELECT MAX(a.Casualty) from Centralrepositoryofincident a )")
+    List<Centralrepositoryofincident> getincidentwithmaximumcasualty();
 
 
 }
