@@ -31,4 +31,11 @@ public class Organisation {
     private List<NDRFngo> ndrFngos ;
 
 
+    @OneToMany(cascade = CascadeType.ALL,targetEntity=NDRFngo.class)
+    @JoinColumn(name="Type")
+    private List<NDRFngo> ndrf_ngo;
+
+    @OneToMany(cascade = CascadeType.ALL,targetEntity=Hospital.class)
+    @JoinColumn(name="Type")
+    private List<Hospital> hospital;
 }

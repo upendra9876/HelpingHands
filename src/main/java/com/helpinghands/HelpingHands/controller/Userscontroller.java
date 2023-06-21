@@ -23,8 +23,35 @@ public class Userscontroller {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
+    @GetMapping("/getUser/{UserId}")
+	public Users getUserById(@PathVariable long Id)
+	{
+		return this.usersservice.getUserById(Id);
+	}
 
 
+    @PutMapping("/users")
+	public Users updateUsers(@RequestBody Users users)
+	{
+		return this.usersservice.updateUsers(users);
+	}
+    
+    @PostMapping("/createUsers")
+    public Users createUsers(@RequestBody Users users)
+    {
+		return this.usersservice.createUsers(users);
+    }
+    
+    @DeleteMapping("/getUsers/{UserId}")
+	public ResponseEntity<HttpStatus> deleteOrder(@PathVariable Long userId)
+	{
+		try {
+			this.usersservice.deleteUser(userId);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 
     }
 
