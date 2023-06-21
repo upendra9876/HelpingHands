@@ -1,5 +1,6 @@
 package com.helpinghands.HelpingHands.controller;
 
+import com.helpinghands.HelpingHands.Constants;
 import com.helpinghands.HelpingHands.services.Usersservice;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.Objects;
 
 @RestController
-@RequestMapping("api/v1/users")
+@RequestMapping(Constants.REQUEST_MAPPING)
 @Log4j2
 public class Userscontroller {
 
