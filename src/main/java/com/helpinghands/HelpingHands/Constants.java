@@ -1,6 +1,7 @@
 package com.helpinghands.HelpingHands;
 
 public class Constants {
+    public static final String REQUEST_MAPPING= "/api/v1";
 
     public static final String DATA_NOT_FOUND = "Data not Found";
 

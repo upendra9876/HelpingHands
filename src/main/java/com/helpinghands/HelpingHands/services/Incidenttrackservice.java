@@ -14,7 +14,7 @@ public interface Incidenttrackservice {
 
     public List<Centralrepositoryofincident> getAllIncidentHappens() throws EmptyListException;
 
-    public Location reportTheIncident(ReportIncident incident, String userId);//also send userid
+    public Location reportTheIncident(ReportIncident incident, String userId) throws Exception;//also send userid
     public void incidentVerificationByAdmin(String incidentId);
 
     public Admin getAdminOfArea(String postalcode);

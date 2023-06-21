@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping(Constants.REQUEST_MAPPING)
 @Log4j2
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class IncidentTrackcontroller {
@@ -53,11 +53,11 @@ public class IncidentTrackcontroller {
         return this.incidenttrackservice.getAllIncidentHappens();
     }
     @PostMapping(Constants.REPORT_INCIDENT)
-    public Location addIncident(@RequestBody @Valid ReportIncident incident, @RequestHeader String userId) throws MethodArgumentNotValidException,IllegalStateException {
+    public Location addIncident(@RequestBody @Valid ReportIncident incident, @RequestHeader String userId) throws Exception {
        return  this.incidenttrackservice.reportTheIncident(incident,userId);
     }
 
-    @GetMapping(Constants.VERIFY_INCIDENT_BY_AREA_ADMIN)
+    @PutMapping(Constants.VERIFY_INCIDENT_BY_AREA_ADMIN)
     public String incidentVerifyByAdmin(@RequestHeader String incidentId) throws NoSuchElementException {
         this.incidenttrackservice.incidentVerificationByAdmin(incidentId);
         return "incident verified by admin";
@@ -67,10 +67,8 @@ public class IncidentTrackcontroller {
         return this.incidenttrackservice.getAdminOfArea(postalcode);
     }
     @DeleteMapping(Constants.SET_INCIDENT_EFFECT_END_DATE)
-    public Centralrepositoryofincident endIncident(@RequestHeader String incidentId,@RequestHeader LocalDate endDate) throws NoSuchElementException{
-
-        return this.incidenttrackservice.incidentEnd(incidentId,endDate);
-
+    public Centralrepositoryofincident  endIncident(@RequestHeader String incidentId,@RequestHeader LocalDate endDate) throws NoSuchElementException{
+      return this.incidenttrackservice.incidentEnd(incidentId,endDate);
     }
     @GetMapping(Constants.GET_ALL_INCIDENT_OF_AREA)
     public List<Centralrepositoryofincident> getAllIncincidentOfArea(@RequestHeader String postalCode) throws NoSuchElementException,EmptyListException{
