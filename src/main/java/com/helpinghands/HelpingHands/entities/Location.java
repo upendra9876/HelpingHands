@@ -26,6 +26,22 @@ public class Location {
     @JoinColumn(name = "postal")
     private List<Centralrepositoryofincident> centralrepositoryofincidentList;
 
+    public List<Users> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<Users> users) {
+        this.users = users;
+    }
+
+    public Admin getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
+    }
+
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "postal")
     private List<Temporarydatabaseofincident> temporarydatabaseofincidents;

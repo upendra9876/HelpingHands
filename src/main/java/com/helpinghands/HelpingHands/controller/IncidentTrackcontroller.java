@@ -1,7 +1,7 @@
 package com.helpinghands.HelpingHands.controller;
 
 import com.helpinghands.HelpingHands.Constants;
-import com.helpinghands.HelpingHands.dto.ReportIncident;
+
 import com.helpinghands.HelpingHands.entities.*;
 import com.helpinghands.HelpingHands.exception.EmptyListException;
 import com.helpinghands.HelpingHands.repository.AdminDao;
@@ -53,7 +53,7 @@ public class IncidentTrackcontroller {
         return this.incidenttrackservice.getAllIncidentHappens();
     }
     @PostMapping(Constants.REPORT_INCIDENT)
-    public Location addIncident(@RequestBody @Valid ReportIncident incident, @RequestHeader String userId) throws MethodArgumentNotValidException,IllegalStateException {
+    public Location addIncident(@RequestBody @Valid Temporarydatabaseofincident incident, @RequestHeader String userId) throws MethodArgumentNotValidException,IllegalStateException {
        return  this.incidenttrackservice.reportTheIncident(incident,userId);
     }
 

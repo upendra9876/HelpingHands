@@ -67,6 +67,94 @@ public class Temporarydatabaseofincident {
     @JoinColumn(name = "inventory")
     private Inventory inventory;
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDistrict() {
+        return District;
+    }
+
+    public void setDistrict(String district) {
+        District = district;
+    }
+
+    public String getState() {
+        return State;
+    }
+
+    public void setState(String state) {
+        State = state;
+    }
+
+    public String getDescription() {
+        return Description;
+    }
+
+    public void setDescription(String description) {
+        Description = description;
+    }
+
+    public long getCasualty() {
+        return Casualty;
+    }
+
+    public void setCasualty(long casualty) {
+        Casualty = casualty;
+    }
+
+    public boolean isStatus() {
+        return Status;
+    }
+
+    public void setStatus(boolean status) {
+        Status = status;
+    }
+
+    public LocalDate getIncidentEndDate() {
+        return incidentEndDate;
+    }
+
+    public void setIncidentEndDate(LocalDate incidentEndDate) {
+        this.incidentEndDate = incidentEndDate;
+    }
+
+    public LocalDate getIncidentDate() {
+        return incidentDate;
+    }
+
+    public void setIncidentDate(LocalDate incidentDate) {
+        this.incidentDate = incidentDate;
+    }
+
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
+    }
+
+    public List<Organisation> getOrganisations() {
+        return organisations;
+    }
+
+    public void setOrganisations(List<Organisation> organisations) {
+        this.organisations = organisations;
+    }
+
     @OneToMany
     @JoinColumn(name = "incident_id")
     private List<Organisation> organisations;

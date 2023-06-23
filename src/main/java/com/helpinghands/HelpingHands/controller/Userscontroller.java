@@ -1,5 +1,7 @@
 package com.helpinghands.HelpingHands.controller;
 
+import com.helpinghands.HelpingHands.entities.Location;
+import com.helpinghands.HelpingHands.repository.Locationdao;
 import com.helpinghands.HelpingHands.services.Usersservice;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,8 @@ import java.util.Objects;
 public class Userscontroller {
 
     private Usersservice usersservice;
+
+	private Locationdao locationdao;
 
     @GetMapping("/users")
     public ResponseEntity<Object> getAllUser() {
@@ -37,9 +41,11 @@ public class Userscontroller {
 	}
     
     @PostMapping("/createUsers")
-    public Users createUsers(@RequestBody Users users)
+    public Location createUsers(@RequestBody Users users, @RequestHeader String postal)
     {
-		return this.usersservice.createUsers(users);
+		Location location= locationdao.findById(postal).get();
+		return location;
+		//return this.usersservice.createUsers(users,postal);
     }
     
     @DeleteMapping("/getUsers/{UserId}")

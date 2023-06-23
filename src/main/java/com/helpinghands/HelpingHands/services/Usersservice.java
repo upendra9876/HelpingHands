@@ -12,7 +12,9 @@ public interface Usersservice
 	List <Users> getAllUser(); 
 	Users getUserById(Long userid);
 	Users updateUsers(Users users);
-	Users createUsers(Users users);
+	Users createUsers(Users users, String postal);
+
+	Admin createAdmin(Admin admin);
 	 void deleteUser(Long id);
 	
 }

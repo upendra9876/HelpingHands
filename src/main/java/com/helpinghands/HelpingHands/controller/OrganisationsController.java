@@ -2,19 +2,21 @@ package com.helpinghands.HelpingHands.controller;
 
 import java.util.List;
 
+import com.helpinghands.HelpingHands.Constants;
 import com.helpinghands.HelpingHands.entities.BloodBank;
 import com.helpinghands.HelpingHands.entities.NDRFngo;
-import com.helpinghands.HelpingHands.services.BloodBankService;
+import com.helpinghands.HelpingHands.entities.Organisation;
+import com.helpinghands.HelpingHands.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import com.helpinghands.HelpingHands.entities.Hospital;
-import com.helpinghands.HelpingHands.services.HospitalService;
-import com.helpinghands.HelpingHands.services.NDRFngoService;
-import com.helpinghands.HelpingHands.services.VehiclesService;
 import org.springframework.http.HttpStatus;
 
+@RestController
+@RequestMapping("/api/v1")
 public class OrganisationsController {
 	@GetMapping
 	public void chech() {
@@ -29,8 +31,15 @@ public class OrganisationsController {
 
 	@Autowired
 	private BloodBankService bloodBankService;
+	@Autowired
+	private OrganisationService organisationService;
 
 
+
+	@GetMapping("/getOrganisation")
+	public List<Organisation> getAllOrganisation() {
+		return this.organisationService.getAllOrganisation();
+	}
 	@GetMapping("/getHospital")
 	public List<Hospital> getAllHospital() {
 
@@ -78,7 +87,7 @@ public class OrganisationsController {
 		return this.vehiclesService.availableVehicle(Id);
 	}
 
-	@GetMapping("/getHospital")
+	@GetMapping("/getBloodBank")
 	public List<BloodBank> getAllBloodBank() {
 
 		return this.bloodBankService.getAllBloodBank();
@@ -95,32 +104,32 @@ public class OrganisationsController {
 		return hospitalService.AddNoofBeds(hospital);
 	}
 
-	@PostMapping()
+	@PostMapping("/NoOfNurse")
 	public Hospital NoofNurse(@RequestBody Hospital hospital) {
 		return hospitalService.AddNoofNurse(hospital);
 	}
 
-	@PostMapping()
+	@PostMapping("/NoofMedikit")
 	public Hospital NoofMedikit(@RequestBody Hospital hospital) {
 		return hospitalService.AddNoofMedikit(hospital);
 	}
 
-	@PostMapping()
+	@PostMapping("/NoofDoctor")
 	public Hospital NoofDoctor(@RequestBody Hospital hospital) {
 		return hospitalService.AddNoofDoctor(hospital);
 	}
 
-	@PostMapping()
+	@PostMapping("/NoofBloodBankByCity")
 	public BloodBank BloodbankByCity(@RequestBody BloodBank bloodBank) {
 		return bloodBankService.saveBloodBankByCity(bloodBank);
 	}
 
-	@PostMapping()
+	@PostMapping("/NoofPerson")
 	public NDRFngo NoofPerson(@RequestBody NDRFngo ndrFngo) {
 		return ndrfNgoService.addNoofPerson(ndrFngo);
 	}
 
-	@PostMapping()
+	@PostMapping("/NoofVehicle")
 	public NDRFngo NoofVehicle(@RequestBody NDRFngo ndrFngo) {
 		return ndrfNgoService.addNoofVehicle(ndrFngo);
 	}
