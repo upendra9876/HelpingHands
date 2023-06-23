@@ -2,6 +2,7 @@ package com.helpinghands.HelpingHands.services;
 
 
 
+import com.helpinghands.HelpingHands.dto.ReportIncident;
 import com.helpinghands.HelpingHands.entities.*;
 import com.helpinghands.HelpingHands.exception.EmptyListException;
 import com.helpinghands.HelpingHands.exception.ValidIncidentidexception;
