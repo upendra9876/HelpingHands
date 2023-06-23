@@ -93,7 +93,7 @@ public class HospitalService {
 				.orElseThrow(() -> new NotFoundException("Hospital not found with name: " + hospitalId));
 
 	 hospital.setHospital_name(hospital_name);
-	 hospital.setHospital_id(hospitalId);
+	 hospital.setHospitalId(hospitalId);
 
 		return hospitalDao.save(hospital);
 	}

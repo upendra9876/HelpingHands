@@ -15,17 +15,10 @@ public class Organisation {
     private String name;
 
 
-    @OneToMany(cascade = CascadeType.ALL,targetEntity = Hospital.class)
-    @JoinColumn(name = "hospitalId")
-    private List<Hospital> hospitals;
-
     @OneToMany(cascade = CascadeType.ALL,targetEntity = BloodBank.class)
     @JoinColumn(name = "bloodBankId")
     private List<BloodBank> bloodbanks;
-
-    @OneToMany(cascade = CascadeType.ALL,targetEntity = NDRFngo.class)
-    @JoinColumn(name = "ndrfNgoId")
-    private List<NDRFngo> ndrFngos ;
+;
 
 
     @OneToMany(cascade = CascadeType.ALL,targetEntity=NDRFngo.class)
