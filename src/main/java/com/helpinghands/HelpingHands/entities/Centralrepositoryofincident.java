@@ -2,6 +2,8 @@ package com.helpinghands.HelpingHands.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,7 +33,9 @@ public class Centralrepositoryofincident {
 
     @NotBlank(message = "Description must not be blank")
     private String Description;
-
+    
+    @Min(0)
+    @Max(10000)
     private long Casualty;
 
 
