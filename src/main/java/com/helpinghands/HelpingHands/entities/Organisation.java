@@ -15,6 +15,8 @@ public class Organisation {
     private String name;
 
 
+
+
     @OneToMany(cascade = CascadeType.ALL,targetEntity = BloodBank.class)
     @JoinColumn(name = "bloodBankId")
     private List<BloodBank> bloodbanks;
