@@ -1,7 +1,7 @@
 package com.helpinghands.HelpingHands.services;
 
 
-import com.helpinghands.HelpingHands.dto.ReportIncident;
+
 import com.helpinghands.HelpingHands.entities.*;
 import com.helpinghands.HelpingHands.exception.EmptyListException;
 import com.helpinghands.HelpingHands.exception.ValidIncidentidexception;
@@ -32,8 +32,10 @@ public class incidenttrackserviceimpletation implements Incidenttrackservice{
     private Locationdao locationdao;
 
 
-    @Override
+
+@Override
     public Location reportTheIncident(ReportIncident incident1, String userId) throws Exception {
+
         try {
             Users user= userDao.findById(userId).get();
             String error="NO USer exist with id"+userId;
