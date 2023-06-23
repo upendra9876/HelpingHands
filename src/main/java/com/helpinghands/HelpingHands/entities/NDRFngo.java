@@ -16,7 +16,6 @@ public class NDRFngo {
 	private long available_vehicles;
 
 
-
 	@ManyToOne
 	@JoinColumn(name = "Ndrf_Ngo")
 	private Organisation organisation;
