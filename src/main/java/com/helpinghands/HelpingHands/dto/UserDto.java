@@ -1,34 +1,22 @@
-package com.helpinghands.HelpingHands.entities;
+package com.helpinghands.HelpingHands.dto;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.validator.internal.util.stereotypes.Lazy;
-
-import java.util.Date;
-import java.util.List;
-
-import static jakarta.persistence.FetchType.LAZY;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-@Entity
-public class Users {
-    @Id
-    @Column(name="UserId")
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String userid;
-
+@AllArgsConstructor
+public class UserDto {
     @NotBlank
     @Column(name="name")
     private String name;
 
-    @NotBlank
+    @Email
     @Column(name="Email")
     private String email;
 
@@ -56,22 +44,7 @@ public class Users {
     @Column(name="Moblie_no.")
     private Long moblieno;
 
-
+    @NotBlank
     @Column(name="Available_for_Volunteer")
     private Boolean availableforvolunteer;
-
-
-
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinColumn(name = "userId")
-    private List<Centralrepositoryofincident> centralrepositoryofincidents;
-
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinColumn(name = "userId")
-    private List<Temporarydatabaseofincident> temporarydatabaseofincidents;
-
-
 }
-
-
-

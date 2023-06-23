@@ -1,11 +1,13 @@
 package com.helpinghands.HelpingHands.controller;
 
+import com.helpinghands.HelpingHands.dto.UserDto;
 import com.helpinghands.HelpingHands.entities.Location;
 import com.helpinghands.HelpingHands.repository.Locationdao;
 
 import com.helpinghands.HelpingHands.Constants;
 
 import com.helpinghands.HelpingHands.services.Usersservice;
+import jdk.dynalink.NamedOperation;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,15 +15,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.helpinghands.HelpingHands.entities.Users;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(Constants.REQUEST_MAPPING)
 @Log4j2
 public class Userscontroller {
-
+	@Autowired
     private Usersservice usersservice;
-
+	@Autowired
 	private Locationdao locationdao;
 
     @GetMapping("/users")
@@ -44,11 +48,9 @@ public class Userscontroller {
 	}
     
     @PostMapping("/createUsers")
-    public Location createUsers(@RequestBody Users users, @RequestHeader String postal)
+    public Users createUsers( @RequestBody UserDto user, @RequestHeader String postal) throws NoSuchElementException,Exception
     {
-		Location location= locationdao.findById(postal).get();
-		return location;
-		//return this.usersservice.createUsers(users,postal);
+	return this.usersservice.createUsers(user,postal);
     }
     
     @DeleteMapping("/getUsers/{UserId}")
