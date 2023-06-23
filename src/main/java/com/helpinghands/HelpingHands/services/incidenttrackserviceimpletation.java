@@ -8,6 +8,7 @@ import com.helpinghands.HelpingHands.exception.ValidIncidentidexception;
 import com.helpinghands.HelpingHands.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import javax.sound.sampled.FloatControl;
 import java.lang.invoke.WrongMethodTypeException;
@@ -31,8 +32,10 @@ public class incidenttrackserviceimpletation implements Incidenttrackservice{
     private Locationdao locationdao;
 
 
-    @Override
-    public Location reportTheIncident(Temporarydatabaseofincident incident1, String userId){
+
+@Override
+    public Location reportTheIncident(ReportIncident incident1, String userId) throws Exception {
+
         try {
             Users user= userDao.findById(userId).get();
             String error="NO USer exist with id"+userId;
@@ -60,8 +63,9 @@ public class incidenttrackserviceimpletation implements Incidenttrackservice{
                 return location;
         }
         catch (Exception exc){
-            throw new NoSuchElementException("Please enter valid userId");
+            throw new Exception("Please enter valid userId");
         }
+
 
 
 
@@ -320,45 +324,44 @@ public class incidenttrackserviceimpletation implements Incidenttrackservice{
     }
 
     @Override
-    public Centralrepositoryofincident incidentEnd(String incidentid, LocalDate enddate) {
+    public Centralrepositoryofincident incidentEnd(String incidentId, LocalDate endDate) {
         try{
-        Temporarydatabaseofincident incident = temporarydatabaseofincidentdao.findById(incidentid).get();
+            Temporarydatabaseofincident incident=temporarydatabaseofincidentdao.findById(incidentId).get();
+            incident.setIncidentEndDate(endDate);
+            temporarydatabaseofincidentdao.save(incident);
+            Location location = locationdao.findById(getPostalByIncidentId(incidentId)).get();
+            Users user = getUserByIncidentInLocal(incidentId);
+
+            List<Temporarydatabaseofincident> locincidents= location.getTemporarydatabaseofincidents();
+            locincidents.remove(incident);
+
+            List<Temporarydatabaseofincident> userincide=user.getTemporarydatabaseofincidents();
+            userincide.remove(incident);
 
 
-        incident.setIncidentEndDate(enddate);
-        Location location = locationdao.findById(getPostalByIncidentId(incidentid)).get();
-        Users user = getUserByIncidentInLocal(incidentid);
-        List<Centralrepositoryofincident> centralrepositoryofincidents = location.getCentralrepositoryofincidentList();
-        List<Centralrepositoryofincident> centralrepositoryofincidentList = user.getCentralrepositoryofincidents();
-        List<Temporarydatabaseofincident> temporarydatabaseofincidents = location.getTemporarydatabaseofincidents();
-        temporarydatabaseofincidents.remove(incident);
-        List<Temporarydatabaseofincident> temporarydatabaseofincidents1 = user.getTemporarydatabaseofincidents();
-        temporarydatabaseofincidents1.remove(incident);
-        temporarydatabaseofincidentdao.delete(incident);
-        Centralrepositoryofincident centralrepositoryofincident = new Centralrepositoryofincident();
+            Centralrepositoryofincident centralrepositoryofincident = new Centralrepositoryofincident();
+            centralrepositoryofincident.setId(incident.id);
+            centralrepositoryofincident.setName(incident.getName());
+            centralrepositoryofincident.setIncidentEndDate(incident.getIncidentEndDate());
+            centralrepositoryofincident.setDistrict(incident.getDistrict());
+            centralrepositoryofincident.setCasualty(incident.getCasualty());
+            centralrepositoryofincident.setDescription(incident.getDescription());
+            centralrepositoryofincident.setIncidentDate(incident.getIncidentDate());
+            centralrepositoryofincident.setState(incident.getState());
+            List<Centralrepositoryofincident> locationincidents= location.getCentralrepositoryofincidentList();
+            locationincidents.add(centralrepositoryofincident);
+            List<Centralrepositoryofincident> userincidents= user.getCentralrepositoryofincidents();
+            userincidents.add(centralrepositoryofincident);
+            locationincidents.add(centralrepositoryofincident);
+            temporarydatabaseofincidentdao.delete(incident);
+            centralrepositoryofincidentdao.save(centralrepositoryofincident);
 
-        centralrepositoryofincident.setId(incident.id);
-        centralrepositoryofincident.setName(incident.getName());
-        centralrepositoryofincident.setIncidentEndDate(incident.getIncidentEndDate());
-        centralrepositoryofincident.setDistrict(incident.getDistrict());
-        centralrepositoryofincident.setCasualty(incident.getCasualty());
-        centralrepositoryofincident.setDescription(incident.getDescription());
-        centralrepositoryofincident.setIncidentDate(incident.getIncidentDate());
+            return centralrepositoryofincident;
 
-        centralrepositoryofincident.setState(incident.getState());
-        centralrepositoryofincidentdao.save(centralrepositoryofincident);
-
-        centralrepositoryofincidentList.add(centralrepositoryofincident);
-        centralrepositoryofincidents.add(centralrepositoryofincident);
-        location.setTotaldisaster(location.getTotaldisaster() + 1);
-        locationdao.save(location);
-
-        return centralrepositoryofincident;
-    }
-        catch(Exception exc){
-            throw new NoSuchElementException("No INcident Found with id");
         }
-
+        catch(Exception e){
+            throw new NoSuchElementException("invalid incidentId");
+        }
     }
     public List<Centralrepositoryofincident> findIncidentsBetweenDuration() {
         return null;
