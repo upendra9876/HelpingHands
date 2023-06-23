@@ -1,6 +1,6 @@
 package com.helpinghands.HelpingHands.services;
 
-import com.helpinghands.HelpingHands.dto.ReportIncident;
+//import com.helpinghands.HelpingHands.dto.ReportIncident;
 import com.helpinghands.HelpingHands.entities.*;
 import com.helpinghands.HelpingHands.exception.EmptyListException;
 
@@ -14,7 +14,9 @@ public interface Incidenttrackservice {
 
     public List<Centralrepositoryofincident> getAllIncidentHappens() throws EmptyListException;
 
+
     public Location reportTheIncident(ReportIncident incident, String userId) throws Exception;//also send userid
+
     public void incidentVerificationByAdmin(String incidentId);
 
     public Admin getAdminOfArea(String postalcode);

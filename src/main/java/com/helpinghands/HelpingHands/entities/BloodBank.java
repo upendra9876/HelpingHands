@@ -1,6 +1,8 @@
 package com.helpinghands.HelpingHands.entities;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
 
@@ -8,10 +10,11 @@ import lombok.Data;
 @Entity
 public class BloodBank {
     @Id
-    private String Id;
-    private String bloodBankName;
-    private String bloodType;
-    private long availableQuantity;
-    private String city;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
+	private String name;
+	private String bloodgroup;
+	private int available_qty;
+	private String city;
 
 }
