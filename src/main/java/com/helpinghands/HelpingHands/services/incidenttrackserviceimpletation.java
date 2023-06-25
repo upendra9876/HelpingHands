@@ -55,11 +55,13 @@ public class incidenttrackserviceimpletation implements Incidenttrackservice{
 
                 List<Temporarydatabaseofincident> incidents= location.getTemporarydatabaseofincidents();
                 List<Temporarydatabaseofincident> userincident= user.getTemporarydatabaseofincidents();
-
+                user.setTemporarydatabaseofincidents(userincident);
+                location.setTemporarydatabaseofincidents(incidents);
                 userincident.add(incident);
                 incidents.add(incident);
-                locationdao.save(location);
                 userDao.save(user);
+                locationdao.save(location);
+
                 temporarydatabaseofincidentdao.save(incident);
                 return location;
         }

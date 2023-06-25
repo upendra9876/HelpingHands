@@ -1,41 +1,36 @@
 package com.helpinghands.HelpingHands.services;
 
-import com.helpinghands.HelpingHands.entities.Hospital;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.helpinghands.HelpingHands.entities.NDRFngo;
-import com.helpinghands.HelpingHands.repository.NDRFngoDao;
+import com.helpinghands.HelpingHands.entities.Relief;
+import com.helpinghands.HelpingHands.repository.ReliefDao;
 
 
 @Service
 public class NDRFngoService {
 
-	@Autowired
-private NDRFngoDao ndrfNgoDao;	
-	
-	public NDRFngoService(NDRFngoDao ndrfNgoDao) {
-		super();
-		this.ndrfNgoDao = ndrfNgoDao;
-	}
-
-
-
-
-	public long availablePersonNdrf_Ngo(long id) {
-		NDRFngo ndrfngo = ndrfNgoDao.findById(id).get();
-		long availiablePerson= ndrfngo.getAvailable_person();
-		return availiablePerson;
-	}
-
-	public NDRFngo addNoofPerson(NDRFngo ndrFngo)
-	{
-		return  ndrfNgoDao.save(ndrFngo);
-	}
-
-	public NDRFngo addNoofVehicle(NDRFngo ndrFngo)
-	{
-		return ndrfNgoDao.save(ndrFngo);
-	}
-	
+//	@Autowired
+//private ReliefDao ndrfNgoDao;
+//
+//	public NDRFngoService(ReliefDao ndrfNgoDao) {
+//		super();
+//		this.ndrfNgoDao = ndrfNgoDao;
+//	}
+//
+//
+//
+//
+//
+//
+//	public Relief addNoofPerson(Relief relief)
+//	{
+//		return  ndrfNgoDao.save(relief);
+//	}
+//
+//	public Relief addNoofVehicle(Relief relief)
+//	{
+//		return ndrfNgoDao.save(relief);
+//	}
+//
 
 }

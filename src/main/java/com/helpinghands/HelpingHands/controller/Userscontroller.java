@@ -6,14 +6,19 @@ import com.helpinghands.HelpingHands.repository.Locationdao;
 
 import com.helpinghands.HelpingHands.Constants;
 
+import com.helpinghands.HelpingHands.repository.UserDao;
 import com.helpinghands.HelpingHands.services.Usersservice;
+import jakarta.validation.Valid;
 import jdk.dynalink.NamedOperation;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import com.helpinghands.HelpingHands.entities.Users;
+
+import java.security.cert.TrustAnchor;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -28,43 +33,51 @@ public class Userscontroller {
 	@Autowired
 	private Locationdao locationdao;
 
-    @GetMapping("/users")
+	@Autowired
+	private UserDao userDao;
+
+    @GetMapping(Constants.GET_ALL_USERS)
     public ResponseEntity<Object> getAllUser() {
         List<Users> users = usersservice.getAllUser();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @GetMapping("/getUser/{UserId}")
-	public Users getUserById(@PathVariable long Id)
+    @GetMapping(Constants.FIND_USER_BY_ID)
+	public Users getUserById(@PathVariable String UserId) throws NoSuchElementException,Exception
 	{
-		return this.usersservice.getUserById(Id);
+		return this.usersservice.getUserById(UserId);
 	}
 
 
-    @PutMapping("/users")
-	public Users updateUsers(@RequestBody Users users)
-	{
-		return this.usersservice.updateUsers(users);
-	}
+
     
-    @PostMapping("/createUsers")
-    public Users createUsers( @RequestBody UserDto user, @RequestHeader String postal) throws NoSuchElementException,Exception
+    @PostMapping(Constants.NEW_USER_SIGNUP)
+    public Users createUsers(@RequestBody @Valid UserDto user, @RequestHeader String postal) throws Exception
     {
+		//return "hn";
 	return this.usersservice.createUsers(user,postal);
     }
     
-    @DeleteMapping("/getUsers/{UserId}")
-	public ResponseEntity<HttpStatus> deleteOrder(@PathVariable Long userId)
+    @DeleteMapping(Constants.DELETE_USE_BY_ID)
+	public String deleteOrder(@PathVariable String UserId) throws NoSuchElementException,Exception
 	{
-		try {
-			this.usersservice.deleteUser(userId);
-			return new ResponseEntity<>(HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		this.usersservice.deleteUser(UserId);
+		return "done";
+	}
+	@GetMapping(Constants.GET_ALL_USER_OF_POSTAL_CODE)
+	public List<Users> getAllUsersOfPostalcode(@PathVariable String postal){
+		Location l= locationdao.findById(postal).get();
+		return l.getUsers();
 	}
 
-    }
+	@GetMapping(Constants.USER_LOGIN)
+	public String userLogin(@RequestHeader String email, @RequestHeader String password)throws Exception {
+		return this.usersservice.userLogin(email,password);
+
+	}
+
+
+}
 
 
 

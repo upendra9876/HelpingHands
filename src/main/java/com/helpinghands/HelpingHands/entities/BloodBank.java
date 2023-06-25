@@ -12,9 +12,15 @@ public class BloodBank {
     @Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+
 	private String name;
-	private String bloodgroup;
+
 	private int available_qty;
-	private String city;
+
+	private String postal;
+
+	private String District;
+
+	private String State;
 
 }

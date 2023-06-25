@@ -61,6 +61,12 @@ public class Constants {
     public static final String UPDATE_WATER_GALLON_FOR_INCIDENT="/updateWaterGallonForIncident/{incidentId}";
 
     public static final String GET_INVENTORY_BY_ID= "/inventory/{inventoryId}";
+    public static final String USER_LOGIN ="/userLogin";
+    public static final String GET_ALL_USER_OF_POSTAL_CODE = "/getAllUsersOfPostalCode/{postal}";
+    public static final String DELETE_USE_BY_ID = "/DeleteUserById/{UserId}";
+    public static final String NEW_USER_SIGNUP = "/SignUpNewUser";
+    public static final String FIND_USER_BY_ID = "/getUserById/{UserId}";
+    public static final String GET_ALL_USERS = "/getAllUsers";
 
 
 

@@ -1,8 +1,10 @@
 package com.helpinghands.HelpingHands.advice;
 
+import com.helpinghands.HelpingHands.exception.EmailAlreadyexistException;
 import com.helpinghands.HelpingHands.exception.EmptyListException;
 import com.helpinghands.HelpingHands.exception.ValidIncidentidexception;
 import jakarta.persistence.Lob;
+import jakarta.transaction.RollbackException;
 import lombok.extern.java.Log;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -31,6 +33,14 @@ public class Applicationexceptioncontroller {
 
         });
         return errormap;
+    }
+    @ExceptionHandler(RollbackException.class)
+    public Map<String,String> rollbackexception(RollbackException exc){
+        Map<String,String> error = new HashMap<>();
+
+        error.put("error_message", exc.getMessage());
+        error.put("es","1");
+        return error;
     }
     @ExceptionHandler(IllegalStateException.class)
     public Map<String,String> illegealstateexception(IllegalStateException exc){
@@ -67,5 +77,24 @@ public class Applicationexceptioncontroller {
         error.put("es","1");
         return error;
     }
+
+    @ExceptionHandler(EmailAlreadyexistException.class)
+    public Map<String,String> emailalreadyexistexception(EmailAlreadyexistException exc){
+        Map<String,String> error= new HashMap<>();
+        error.put("error_message", exc.getMessage());
+        error.put("es", "1");
+        return error;
+    }
+
+    @ExceptionHandler(Exception.class)
+    public Map<String,String> globalexception(Exception exc){
+        Map<String,String> error= new HashMap<>();
+       // error.put("exception_Name", exc.);
+        error.put("error_message", exc.getMessage());
+        error.put("es", "1");
+        return error;
+    }
+
+
 
 }

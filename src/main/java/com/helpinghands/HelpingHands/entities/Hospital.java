@@ -10,13 +10,21 @@ public class Hospital {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int hospitalId;
+
 	private String hospital_name;
-	private boolean hospital_available;
+
+
 	private long available_doctor;
+
 	private long available_nurse;
+
 	private long available_beds;
+
 	private long available_medikit;
+
 	private long available_ambulance_available;
+
+	private String postal;
 
 
 

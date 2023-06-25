@@ -51,31 +51,27 @@ public class Temporarydatabaseofincident {
     @Column(name = "Date", columnDefinition = "DATE")
     private LocalDate incidentDate;
 
-//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss")
-//    @Column(name = "time", columnDefinition = "TIME")
-//    private LocalTime incidenttime;
 
-//    @Temporal(TemporalType.DATE)
-//    private Date incidenteffectdate;
-//
-//    @Temporal(TemporalType.TIME)
-//    @DateTimeFormat(style = "HH:mm")
-//    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="HH:mm",locale = "")
-//    private Date incidenttime;
-//
-//    @Temporal(TemporalType.DATE)
-//    @DateTimeFormat(pattern = "dd/mm/yyyy")
-//    private Date IncidentDate;
 //
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "inventory")
     private Inventory inventory;
 
+    @OneToMany(cascade = CascadeType.ALL,targetEntity = BloodBank.class,fetch = FetchType.EAGER)
+    @JoinColumn(name = "org_Id")
+    private List<BloodBank> bloodbanks;;
 
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinColumn(name = "incident_id")
-    private List<Organisation> organisations;
+    @OneToMany(cascade = CascadeType.ALL,targetEntity= Relief.class,fetch = FetchType.EAGER)
+    @JoinColumn(name="Org_Id")
+    private List<Relief> Relief_personal;
+
+    @OneToMany(cascade = CascadeType.ALL,targetEntity=Hospital.class,fetch = FetchType.EAGER)
+    @JoinColumn(name="Type")
+    private List<Hospital> hospital;
+
+
+
 
 
 }
