@@ -61,6 +61,20 @@ public class Constants {
     public static final String UPDATE_WATER_GALLON_FOR_INCIDENT="/updateWaterGallonForIncident/{incidentId}";
 
     public static final String GET_INVENTORY_BY_ID= "/inventory/{inventoryId}";
+    public static final String USER_LOGIN ="/userLogin";
+    public static final String GET_ALL_USER_OF_POSTAL_CODE = "/getAllUsersOfPostalCode/{postal}";
+    public static final String DELETE_USE_BY_ID = "/DeleteUserById/{UserId}";
+    public static final String NEW_USER_SIGNUP = "/SignUpNewUser";
+    public static final String FIND_USER_BY_ID = "/getUserById/{UserId}";
+    public static final String GET_ALL_USERS = "/getAllUsers";
+    public static final String ADD_HOSPITALS_TO_INCIDENT="/addHospitals/{incidentId}";
+    public static final String ADD_BLOODBANK_TO_INCIDENT="/addBloodbank/{incidentId}";
+    public static final String ADD_RELIEF_TO_INCIDENT="/addReliefOrg/{incidentId}";
+    public static final String REGISTER_HOSPITAL="/RegisterHospital";
+    public static final String REGISTER_BLOODBANK= "/registerBloodBank";
+    public static final String REGISTER_BELIEF="/RegisterRelief";
+    public static final String  ADD_LOCATION="/addLocation";
+    public static final String  SET_ADMIN_TO_LOCATION="/setAdminToLocation/{Postal}";
 
 
 

@@ -1,13 +1,16 @@
 package com.helpinghands.HelpingHands.services;
+import com.helpinghands.HelpingHands.dto.Locationdto;
 import com.helpinghands.HelpingHands.dto.UserDto;
 import com.helpinghands.HelpingHands.entities.Admin;
 import com.helpinghands.HelpingHands.entities.Location;
 import com.helpinghands.HelpingHands.entities.Users;
+import com.helpinghands.HelpingHands.exception.EmailAlreadyexistException;
 import com.helpinghands.HelpingHands.repository.AdminDao;
 import com.helpinghands.HelpingHands.repository.Locationdao;
 import com.helpinghands.HelpingHands.repository.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,103 +27,140 @@ public class UserserviceImplementation implements Usersservice{
     @Autowired
     private Locationdao locationdao;
 
+	@Autowired
+	private Incidenttrackservice incidenttrackservice;
 
-    public List<Users> getAllUser() {
-        return userDao.findAll();
-    }
 
 	@Override
-	public Users getUserById(Long userid) {
-		return null;
+	public List<Users> getAllUser() {
+		return userDao.findAll();
 	}
 
 	@Override
-	public Users updateUsers(Users users) {
-		return null;
-	}
-
-
-	public Users getAllUserById(String Id) {
-		
-		return userDao.findById(Id).get();
-	}
-	
-	public Users updateUser(Users users) {
-		userDao.save(users);
-		return users;
-	}
-	
-	public Users createUsers(UserDto user, String postal) throws Exception {
+	public Users getUserById(String userid) throws Exception {
 		try{
-			System.out.println("Hhhhhhhhhhhhhhhhh");
-			Optional<Location> location2= locationdao.findById(postal);
-			Location location = location2.get();
+			Users user= userDao.findById(userid).get();
+			return user;
+		}
 
-			Users users1= new Users();
-			List<Users> users= location.getUsers();
-			users1.setCity(user.getCity());
-			users1.setCountry(user.getCountry());
-			users1.setDistrict(user.getDistrict());
-			users1.setEmail(user.getEmail());
-			users1.setGender(user.getGender());
-			users1.setName(user.getName());
-			users1.setAvailableforvolunteer(false);
-			users1.setState(user.getState());
-			users1.setCity(user.getCity());
-			users1.setMoblieno(user.getMoblieno());
+		catch (NoSuchElementException exc){
+			throw new NoSuchElementException("No User Found with Id "+ userid);
+		}catch(Exception exc){
+			throw new Exception();
+		}
+	}
 
-			users.add(users1);
-			userDao.save(users1);
-			location.setUsers(users);
-			locationdao.save(location);
+	@Override
+	public Users updateUsers(String users) throws NoSuchElementException {
+		return null;
+	}
 
+	public Users createUsers(UserDto user, String postal) throws EmailAlreadyexistException {
+		try{
+			boolean emailcheck= checkexistemail(user.getEmail());
+			System.out.println(emailcheck);
+			if(!emailcheck)
+			{
 
-			return users1;
+				Optional<Location> location2 = locationdao.findById(postal);
+				Location location = location2.get();
+
+				Users users1 = new Users();
+				List<Users> users = location.getUsers();
+				users1.setCity(user.getCity());
+				users1.setCountry(user.getCountry());
+				users1.setDistrict(user.getDistrict());
+				users1.setEmail(user.getEmail());
+				users1.setGender(user.getGender());
+				users1.setName(user.getName());
+				users1.setPassword(user.getPassword());
+				users1.setAvailableforvolunteer(false);
+				users1.setState(user.getState());
+				users1.setCity(user.getCity());
+				users1.setMoblieno(user.getMoblieno());
+
+				users.add(users1);
+				userDao.save(users1);
+				location.setUsers(users);
+				locationdao.save(location);
+				return users1;
+			}
+			else throw new EmailAlreadyexistException("Email Already Exist");
 		}
 		catch(NoSuchElementException exc) {
 			throw new NoSuchElementException("Location not exist with postal code, please add location first");
 		}
-		catch(Exception exc){
-			throw new Exception();
-		}
-
 
 	}
 
 	@Override
-	public Admin createAdmin(Admin admin) {
+	public Admin createAdmin(Admin admin, String Postal) {
 		return null;
 	}
 
 	@Override
-	public void deleteUser(Long id) {
+	public void deleteUser(String id) throws Exception {
+		try{
+			Location location= locationdao.findById(incidenttrackservice.getPostalByUserId(id)).get();
+			Users user= userDao.findById(id).get();
+			List<Users> users= location.getUsers();
+			users.remove(user);
+			location.setUsers(users);
+			locationdao.save(location);
+			userDao.delete(user);
+		}catch(NoSuchElementException exc){
+			throw new NoSuchElementException("no user exist with Id " + id);
+		}catch(Exception exc){
+			throw new Exception();
+		}
+	}
+
+
+	public boolean checkexistemail(String email){
+		List<Users> users= userDao.findAll();
+		List<String> emails= new ArrayList<>();
+		for( Users u : users){
+			if(u.getEmail().equals(email)) return true;
+		}
+		return false;
+	}
+
+	public String userLogin(String email, String password) throws Exception{
+		Users user= userDao.checklogin(email,password);
+		if(user!=null){
+			return "Login Successfull";
+		}
+		else throw new NoSuchElementException("Invalid emailId And Password");
+	}
+
+	@Override
+	public Location addLocation(Locationdto locationdto) {
+		Location location= new Location();
+		location.setPostalcode(locationdto.getPostalcode());
+		location.setDistrict(locationdto.getDistrict());
+		location.setTotaldisaster(0);
+		locationdao.save(location);
+		return location;
+	}
+
+	@Override
+	public Location addAdminToLocation(Admin admin, String Postal) throws NoSuchElementException {
+		try{
+			adminDao.save(admin);
+			Location location= locationdao.findById(Postal).get();
+			location.setAdmin(admin);
+			locationdao.save(location);
+			return location;
+
+		}catch(NoSuchElementException exc){
+			throw new NoSuchElementException("invalid postal code");
+		}
 
 	}
 
-	public Admin createAdmin(Admin admin, String postal)
-	{
-		Location locations = locationdao.findById(postal).get();
-		locations.setAdmin(admin);
-
-		//admin1.add(admin);
-		locationdao.save(locations);
-		adminDao.save(admin);
-		return admin;
-
-	}
-	
-	public void deleteUser(String id) {
-		Users entity = userDao.getOne(id);
-		userDao.delete(entity);
-	}
 
 }
 
-
-//@Override
-//    public List<Centralrepositoryofincident> findincidentsbetweenduration() {
-//        return null;
-//    }
 
 
 

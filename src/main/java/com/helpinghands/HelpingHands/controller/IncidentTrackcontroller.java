@@ -55,9 +55,10 @@ public class IncidentTrackcontroller {
     }
     @PostMapping(Constants.REPORT_INCIDENT)   
 
-    public Location addIncident(@RequestBody @Valid ReportIncident incident, @RequestHeader String userId) throws Exception {
+    public String addIncident(@RequestBody @Valid ReportIncident incident, @RequestHeader String userId) throws Exception {
 
-       return  this.incidenttrackservice.reportTheIncident(incident,userId);
+       this.incidenttrackservice.reportTheIncident(incident,userId);
+       return "Incident reported";
     }
 
     @PutMapping(Constants.VERIFY_INCIDENT_BY_AREA_ADMIN)
@@ -165,6 +166,7 @@ public class IncidentTrackcontroller {
     public List<Centralrepositoryofincident> getincidentwithmaxcasualty(){
         return  this.centralrepositoryofincidentdao.getincidentwithmaximumcasualty();
     }
+
 
     public Users getUserByIncidentInLocal(String id){
         return this.incidenttrackservice.getUserByIncidentInLocal(id);

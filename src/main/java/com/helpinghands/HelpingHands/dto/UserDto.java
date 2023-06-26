@@ -1,9 +1,7 @@
 package com.helpinghands.HelpingHands.dto;
 
 import jakarta.persistence.Column;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,39 +10,40 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDto {
-    @NotBlank
+    @NotBlank(message = "name must not be null")
     @Column(name="name")
     private String name;
 
-    @Email
+    @Email(message = "email must not be null or invalid email")
     @Column(name="Email")
     private String email;
 
-    @NotBlank
+    @Size(min = 8,message = "please set password according to guidelines")
+    private String password;
+
+
     @Column(name="gender")
     private String gender;
 
-    @NotBlank
+    @NotBlank(message = "District must not be null")
     @Column(name="district")
     private String district;
 
-    @NotBlank
+    @NotBlank(message = "City must not be null")
     @Column(name="City")
     private String city;
 
-    @NotBlank
+    @NotBlank(message = "State must not be null")
     @Column(name="State")
     private String state;
 
-    @NotBlank
+    @NotBlank(message = "Country must not be null")
     @Column(name="Country")
     private String country;
 
-    @NotNull
-    @Column(name="Moblie_no.")
-    private Long moblieno;
-
     @NotBlank
-    @Column(name="Available_for_Volunteer")
-    private Boolean availableforvolunteer;
+    @Column(name="Moblie_no.")
+   @Pattern(regexp = "^[0-9]{10}$", message = "Invalid phone number")
+    private String moblieno;
+
 }

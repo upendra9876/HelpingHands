@@ -3,10 +3,13 @@ package com.helpinghands.HelpingHands.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Fetch;
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.internal.util.stereotypes.Lazy;
 
 import java.util.Date;
@@ -24,40 +27,37 @@ public class Users {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String userid;
 
-    @NotBlank
-    @Column(name="name")
+
+    private String password;
+
+
     private String name;
 
-    @NotBlank
-    @Column(name="Email")
-    private String email;
 
-    @NotBlank
-    @Column(name="gender")
+       private String email;
+
+
+
     private String gender;
 
-    @NotBlank
-    @Column(name="district")
+
     private String district;
 
-    @NotBlank
-    @Column(name="City")
+
     private String city;
 
-    @NotBlank
-    @Column(name="State")
+
     private String state;
 
-    @NotBlank
-    @Column(name="Country")
+
     private String country;
 
-    @NotNull
-    @Column(name="Moblie_no.")
-    private Long moblieno;
 
 
-    @Column(name="Available_for_Volunteer")
+    private String moblieno;
+
+
+
     private Boolean availableforvolunteer;
 
 
