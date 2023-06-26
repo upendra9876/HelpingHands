@@ -8,8 +8,8 @@ import lombok.Data;
 @Table(name="HospitalDetails")
 public class Hospital {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int hospitalId;
+	@GeneratedValue(strategy = GenerationType.UUID)
+	private String hospitalId;
 
 	private String hospital_name;
 

@@ -5,9 +5,7 @@ This Springboot project is based on quick response system whenever a incident hi
 
 
 Contributor--
-Abhisek Baranwal
-Devansh Mittal
-Prashant Singh
+
 Upendra Kumar Singh
 
 Technologies--

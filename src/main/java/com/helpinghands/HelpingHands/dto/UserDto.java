@@ -18,8 +18,7 @@ public class UserDto {
     @Column(name="Email")
     private String email;
 
-
-   //@Pattern(regexp = "^[a-zA-Z]{8,}$",message = "password must contain atleast 1 uppercase, 1 lowercase, 1 special character and 1 digit ")
+    @Size(min = 8,message = "please set password according to guidelines")
     private String password;
 
 

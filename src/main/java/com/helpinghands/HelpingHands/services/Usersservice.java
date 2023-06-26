@@ -2,8 +2,10 @@ package com.helpinghands.HelpingHands.services;
 
 
 
+import com.helpinghands.HelpingHands.dto.Locationdto;
 import com.helpinghands.HelpingHands.dto.UserDto;
 import com.helpinghands.HelpingHands.entities.Admin;
+import com.helpinghands.HelpingHands.entities.Location;
 import com.helpinghands.HelpingHands.entities.Users;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
@@ -20,6 +22,9 @@ public interface Usersservice
 	Admin createAdmin(Admin admin,String Postal);
 	 void deleteUser(String id) throws NoSuchElementException,Exception;
 	 String userLogin(String email, String password) throws Exception;
+
+	 Location addLocation(Locationdto locationdto);
+	 Location addAdminToLocation(Admin admin, String Postal) throws NoSuchElementException;
 
 }
 

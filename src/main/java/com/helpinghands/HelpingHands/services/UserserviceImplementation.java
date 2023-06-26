@@ -1,4 +1,5 @@
 package com.helpinghands.HelpingHands.services;
+import com.helpinghands.HelpingHands.dto.Locationdto;
 import com.helpinghands.HelpingHands.dto.UserDto;
 import com.helpinghands.HelpingHands.entities.Admin;
 import com.helpinghands.HelpingHands.entities.Location;
@@ -130,6 +131,31 @@ public class UserserviceImplementation implements Usersservice{
 			return "Login Successfull";
 		}
 		else throw new NoSuchElementException("Invalid emailId And Password");
+	}
+
+	@Override
+	public Location addLocation(Locationdto locationdto) {
+		Location location= new Location();
+		location.setPostalcode(locationdto.getPostalcode());
+		location.setDistrict(locationdto.getDistrict());
+		location.setTotaldisaster(0);
+		locationdao.save(location);
+		return location;
+	}
+
+	@Override
+	public Location addAdminToLocation(Admin admin, String Postal) throws NoSuchElementException {
+		try{
+			adminDao.save(admin);
+			Location location= locationdao.findById(Postal).get();
+			location.setAdmin(admin);
+			locationdao.save(location);
+			return location;
+
+		}catch(NoSuchElementException exc){
+			throw new NoSuchElementException("invalid postal code");
+		}
+
 	}
 
 

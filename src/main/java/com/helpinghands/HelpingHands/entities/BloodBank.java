@@ -10,12 +10,12 @@ import lombok.Data;
 @Entity
 public class BloodBank {
     @Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	@GeneratedValue(strategy = GenerationType.UUID)
+	private String id;
 
 	private String name;
 
-	private int available_qty;
+	private String  available_qty;
 
 	private String postal;
 

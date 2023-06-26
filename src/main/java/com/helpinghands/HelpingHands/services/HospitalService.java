@@ -88,15 +88,15 @@ public class HospitalService {
 		return null;
 	}
 
-	public Hospital updateHospitalById(Integer hospitalId, String hospital_name) {
-		Hospital hospital = hospitalDao.findById(hospitalId)
-				.orElseThrow(() -> new NotFoundException("Hospital not found with name: " + hospitalId));
-
-	 hospital.setHospital_name(hospital_name);
-	 hospital.setHospitalId(hospitalId);
-
-		return hospitalDao.save(hospital);
-	}
+//	public Hospital updateHospitalById(Integer hospitalId, String hospital_name) {
+//		Hospital hospital = hospitalDao.findById(hospitalId)
+//				.orElseThrow(() -> new NotFoundException("Hospital not found with name: " + hospitalId));
+//
+//	 hospital.setHospital_name(hospital_name);
+//	 hospital.setHospitalId(hospitalId);
+//
+//		return hospitalDao.save(hospital);
+//	}
 
 	public void deleteHospital(Integer hospitalId) {
 		Hospital entity = hospitalDao.getOne(hospitalId);

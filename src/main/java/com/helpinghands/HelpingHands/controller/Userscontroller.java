@@ -1,6 +1,8 @@
 package com.helpinghands.HelpingHands.controller;
 
+import com.helpinghands.HelpingHands.dto.Locationdto;
 import com.helpinghands.HelpingHands.dto.UserDto;
+import com.helpinghands.HelpingHands.entities.Admin;
 import com.helpinghands.HelpingHands.entities.Location;
 import com.helpinghands.HelpingHands.repository.Locationdao;
 
@@ -17,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import com.helpinghands.HelpingHands.entities.Users;
+import org.springframework.web.servlet.tags.form.AbstractDataBoundFormElementTag;
 
 import java.security.cert.TrustAnchor;
 import java.util.List;
@@ -35,6 +38,15 @@ public class Userscontroller {
 
 	@Autowired
 	private UserDao userDao;
+	@PostMapping(Constants.ADD_LOCATION)
+	public Location addLocation(@RequestBody Locationdto locationdto){
+		return this.usersservice.addLocation(locationdto);
+	}
+
+	@PutMapping(Constants.SET_ADMIN_TO_LOCATION)
+	public Location setAdminToLocation(@RequestBody Admin admin,@PathVariable String Postal) throws NoSuchElementException{
+		return this.usersservice.addAdminToLocation(admin, Postal);
+	}
 
     @GetMapping(Constants.GET_ALL_USERS)
     public ResponseEntity<Object> getAllUser() {
@@ -74,6 +86,10 @@ public class Userscontroller {
 	public String userLogin(@RequestHeader String email, @RequestHeader String password)throws Exception {
 		return this.usersservice.userLogin(email,password);
 
+	}
+	@PutMapping("/updateAdminforLocation/{postal}")
+	public Location updateAdminForLocation(@RequestBody Admin admin, @PathVariable String postal){
+		return this. usersservice.addAdminToLocation(admin,postal);
 	}
 
 

@@ -2,6 +2,7 @@ package com.helpinghands.HelpingHands.controller;
 
 import java.util.List;
 
+import com.helpinghands.HelpingHands.Constants;
 import com.helpinghands.HelpingHands.entities.*;
 import com.helpinghands.HelpingHands.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -146,30 +147,30 @@ public class OrganisationsController {
 //		}
 //	}
 
-	@PutMapping("/addHospitals/{incidentId}")
-	public Temporarydatabaseofincident addHospitals(@PathVariable String incidentId) throws Exception{
+	@PutMapping(Constants.ADD_HOSPITALS_TO_INCIDENT)
+	public Temporarydatabaseofincident addHospitalsToIncident(@PathVariable String incidentId) throws Exception{
 		return this.organisationService.addHospitals(incidentId);
 	}
 
-	@PutMapping("/addReliefOrg/{incidentId}")
-	public Temporarydatabaseofincident addReliefOrg(@PathVariable String incidentId) throws Exception{
+	@PutMapping(Constants.ADD_RELIEF_TO_INCIDENT)
+	public Temporarydatabaseofincident addReliefOrgToIncident(@PathVariable String incidentId) throws Exception{
 		return this.organisationService.addRelief(incidentId);
 	}
-	@PutMapping("/Bloodbank/{incidentId}")
-	public Temporarydatabaseofincident addBloodBank(@PathVariable String incidentId) throws Exception{
+	@PutMapping(Constants.ADD_BLOODBANK_TO_INCIDENT)
+	public Temporarydatabaseofincident addBloodBankToIncident(@PathVariable String incidentId) throws Exception{
 		return this.organisationService.addBloodbanks(incidentId);
 	}
 
-	@PostMapping("/RegisterHospital")
+	@PostMapping(Constants.REGISTER_HOSPITAL)
 	public Hospital addHospital(@RequestBody Hospital hospital){
 		return organisationService.registerHospital(hospital);
 	}
-	@PostMapping("/registerBloodBank")
+	@PostMapping(Constants.REGISTER_BLOODBANK)
 	public BloodBank addBloodBank(@RequestBody BloodBank bloodBank){
 		return this.organisationService.registerbloodbank(bloodBank);
 	}
-	@PostMapping("/RegisterRelief")
-	public Relief addBloodBank(@RequestBody Relief relief){
+	@PostMapping(Constants.REGISTER_BELIEF)
+	public Relief addRelief(@RequestBody Relief relief){
 		return this.organisationService.registerRelief(relief);
 	}
 
