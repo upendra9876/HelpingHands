@@ -49,7 +49,7 @@ public class Admin {
    
 
     @NotNull
-
+    @Pattern(regexp = "^[0-9]{10}$", message = "Invalid phone number")
     @Column(name="Moblie_no.")
     private Long moblieno;
 
