@@ -63,6 +63,7 @@ public class Applicationexceptioncontroller {
     @ExceptionHandler(NoSuchElementException.class)
     public Map<String,String> noSuchElementException(NoSuchElementException noSuchElementException){
         Map<String ,String> errormap= new HashMap<>();
+
         errormap.put("Error Message", noSuchElementException.getMessage());
         errormap.put("es","1");
 
@@ -90,6 +91,7 @@ public class Applicationexceptioncontroller {
     public Map<String,String> globalexception(Exception exc){
         Map<String,String> error= new HashMap<>();
        // error.put("exception_Name", exc.);
+        error.put("error", String.valueOf(exc.getClass()));
         error.put("error_message", exc.getMessage());
         error.put("es", "1");
         return error;
